@@ -55,7 +55,13 @@ public class Run {
                 	ArrayList<DrugStock> drugStocks = DatabaseController.getPharmacyStock(username);
                 	
                 	ServerController.sendData(drugStocks, socket);
-                }
+                }else if (message.equals("LOGIN")) {
+					String username = ServerController.receiveMessage(socket);
+					String password = ServerController.receiveMessage(socket);
+					//Todo:Login Check
+					ServerController.sendMessage("OK", socket);
+				}
+                
             } catch (IOException e) {
                 e.printStackTrace();
             }
