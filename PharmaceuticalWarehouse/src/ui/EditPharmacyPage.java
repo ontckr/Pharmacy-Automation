@@ -1,0 +1,439 @@
+package ui;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.util.ArrayList;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+import javax.swing.JLabel;
+import java.awt.Color;
+import javax.swing.JSpinner;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.JSeparator;
+import database.*;
+import model.*;
+import database.*;
+
+public class EditPharmacyPage extends JFrame {
+	private JPanel contentPane;
+
+	private AdminMainPage adminMainPage;
+
+	public EditPharmacyPage(AdminMainPage adminMainPage, Pharmacy selectedUser) throws ParseException {
+		setResizable(false);
+		String username = selectedUser.getUsername();
+		ArrayList<DrugStock> drugs = DatabaseController.getPharmacyStock(username);
+		for (DrugStock drugStock : drugs) {
+			System.out.println(drugStock.getName());
+		}
+
+		this.adminMainPage = adminMainPage;
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 699, 724);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(230, 230, 250));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JLabel lblName = new JLabel("Name : ");
+		lblName.setFont(new Font("Microsoft JhengHei", Font.BOLD, 17));
+		lblName.setBounds(30, 33, 68, 14);
+		contentPane.add(lblName);
+
+		JLabel nameText = new JLabel();
+		nameText.setText(selectedUser.getName());
+
+		nameText.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		nameText.setBounds(100, 30, 149, 20);
+		contentPane.add(nameText);
+
+		JLabel lblAddress = new JLabel("Address:");
+		lblAddress.setFont(new Font("Microsoft JhengHei", Font.BOLD, 17));
+		lblAddress.setBounds(100, 72, 75, 14);
+		contentPane.add(lblAddress);
+
+		JLabel addressText = new JLabel();
+		addressText.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		addressText.setBounds(185, 70, 149, 20);
+		contentPane.add(addressText);
+		addressText.setText(selectedUser.getAddress());
+
+		JLabel emailText = new JLabel();
+		emailText.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		emailText.setBounds(502, 31, 149, 20);
+		contentPane.add(emailText);
+		emailText.setText(selectedUser.getEmail());
+
+		JLabel lblEmail = new JLabel("Email:");
+		lblEmail.setFont(new Font("Microsoft JhengHei", Font.BOLD, 17));
+		lblEmail.setBounds(440, 33, 68, 14);
+		contentPane.add(lblEmail);
+
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnCancel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.print("New pharmacy page closed.");
+				setVisible(false);
+			}
+		});
+
+		btnCancel.setBounds(44, 640, 90, 30);
+		contentPane.add(btnCancel);
+
+		JLabel lblPhone = new JLabel("Phone:");
+		lblPhone.setFont(new Font("Microsoft JhengHei", Font.BOLD, 17));
+		lblPhone.setBounds(230, 33, 68, 14);
+		contentPane.add(lblPhone);
+
+		// MaskFormatter maskFormatter = new MaskFormatter("(0###) ### ## ##");
+
+		JLabel phoneText = new JLabel();
+		phoneText.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		phoneText.setBounds(300, 30, 149, 20);
+		contentPane.add(phoneText);
+		phoneText.setText(selectedUser.getPhone());
+
+		JLabel lblDistrict = new JLabel("District:");
+		lblDistrict.setFont(new Font("Microsoft JhengHei", Font.BOLD, 17));
+		lblDistrict.setBounds(387, 72, 68, 14);
+		contentPane.add(lblDistrict);
+
+		JLabel districtText = new JLabel();
+		districtText.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		districtText.setBounds(465, 69, 149, 22);
+		districtText.setText(selectedUser.getDistrict());
+		contentPane.add(districtText);
+
+		JLabel lblTalcidMg = new JLabel(drugs.get(0).getName());
+		lblTalcidMg.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblTalcidMg.setBounds(40, 180, 200, 20);
+		contentPane.add(lblTalcidMg);
+
+		JLabel lblUltravistFlakon = new JLabel(drugs.get(1).getName());
+		lblUltravistFlakon.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblUltravistFlakon.setBounds(40, 220, 200, 20);
+		contentPane.add(lblUltravistFlakon);
+
+		JLabel lblVisanneTablet = new JLabel(drugs.get(2).getName());
+		lblVisanneTablet.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblVisanneTablet.setBounds(40, 260, 200, 20);
+		contentPane.add(lblVisanneTablet);
+
+		JLabel lblMinoset = new JLabel(drugs.get(3).getName());
+		lblMinoset.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblMinoset.setBounds(40, 300, 200, 20);
+		contentPane.add(lblMinoset);
+
+		JLabel lblAspirin = new JLabel(drugs.get(4).getName());
+		lblAspirin.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblAspirin.setBounds(40, 340, 200, 20);
+		contentPane.add(lblAspirin);
+
+		JLabel lblBaclan = new JLabel(drugs.get(5).getName());
+		lblBaclan.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblBaclan.setBounds(40, 380, 200, 20);
+		contentPane.add(lblBaclan);
+
+		JLabel lblCiproxin = new JLabel(drugs.get(6).getName());
+		lblCiproxin.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblCiproxin.setBounds(40, 420, 200, 20);
+		contentPane.add(lblCiproxin);
+
+		JLabel lblGlucobay = new JLabel(drugs.get(7).getName());
+		lblGlucobay.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblGlucobay.setBounds(40, 460, 200, 20);
+		contentPane.add(lblGlucobay);
+
+		JLabel lblLuminal = new JLabel(drugs.get(8).getName());
+		lblLuminal.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblLuminal.setBounds(40, 500, 200, 20);
+		contentPane.add(lblLuminal);
+
+		JLabel lblXofigo = new JLabel(drugs.get(9).getName());
+		lblXofigo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblXofigo.setBounds(40, 540, 200, 20);
+		contentPane.add(lblXofigo);
+
+		JLabel lblBoxSize = new JLabel("Box Size");
+		lblBoxSize.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 16));
+		lblBoxSize.setBounds(274, 125, 74, 30);
+		contentPane.add(lblBoxSize);
+
+		JLabel label = new JLabel("10");
+		label.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label.setBounds(300, 180, 48, 14);
+		contentPane.add(label);
+
+		JLabel label_1 = new JLabel("12");
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label_1.setBounds(300, 220, 48, 14);
+		contentPane.add(label_1);
+
+		JLabel label_2 = new JLabel("15");
+		label_2.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label_2.setBounds(300, 260, 48, 14);
+		contentPane.add(label_2);
+
+		JLabel label_3 = new JLabel("8");
+		label_3.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label_3.setBounds(300, 300, 48, 14);
+		contentPane.add(label_3);
+
+		JLabel label_4 = new JLabel("11");
+		label_4.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label_4.setBounds(300, 340, 48, 14);
+		contentPane.add(label_4);
+
+		JLabel label_5 = new JLabel("12");
+		label_5.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label_5.setBounds(300, 380, 48, 14);
+		contentPane.add(label_5);
+
+		JLabel label_6 = new JLabel("13");
+		label_6.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label_6.setBounds(300, 420, 48, 14);
+		contentPane.add(label_6);
+
+		JLabel label_7 = new JLabel("14");
+		label_7.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label_7.setBounds(300, 460, 48, 14);
+		contentPane.add(label_7);
+
+		JLabel label_8 = new JLabel("15");
+		label_8.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label_8.setBounds(300, 500, 48, 14);
+		contentPane.add(label_8);
+
+		JLabel label_9 = new JLabel("16");
+		label_9.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label_9.setBounds(300, 540, 48, 14);
+		contentPane.add(label_9);
+
+		JLabel lblStock = new JLabel("Stock");
+		lblStock.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 16));
+		lblStock.setBounds(425, 125, 74, 30);
+		contentPane.add(lblStock);
+
+		JLabel label1 = new JLabel();
+		label1.setText(String.valueOf(drugs.get(0).getStock()));
+		label1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label1.setBounds(435, 180, 48, 14);
+		contentPane.add(label1);
+
+		JLabel label2 = new JLabel();
+		label2.setText(String.valueOf(drugs.get(1).getStock()));
+		label2.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label2.setBounds(435, 220, 48, 14);
+		contentPane.add(label2);
+
+		JLabel label3 = new JLabel();
+		label3.setText(String.valueOf(drugs.get(2).getStock()));
+		label3.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label3.setBounds(435, 260, 48, 14);
+		contentPane.add(label3);
+
+		JLabel label4 = new JLabel();
+		label4.setText(String.valueOf(drugs.get(3).getStock()));
+		label4.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label4.setBounds(435, 300, 48, 14);
+		contentPane.add(label4);
+
+		JLabel label5 = new JLabel(String.valueOf(drugs.get(4).getStock()));
+		label5.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label5.setBounds(435, 340, 48, 14);
+		contentPane.add(label5);
+
+		JLabel label6 = new JLabel(String.valueOf(drugs.get(5).getStock()));
+		label6.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label6.setBounds(435, 380, 48, 14);
+		contentPane.add(label6);
+
+		JLabel label7 = new JLabel(String.valueOf(drugs.get(6).getStock()));
+		label7.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label7.setBounds(435, 420, 48, 14);
+		contentPane.add(label7);
+
+		JLabel label8 = new JLabel(String.valueOf(drugs.get(7).getStock()));
+		label8.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label8.setBounds(435, 460, 48, 14);
+		contentPane.add(label8);
+
+		JLabel label9 = new JLabel(String.valueOf(drugs.get(8).getStock()));
+		label9.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label9.setBounds(435, 500, 48, 14);
+		contentPane.add(label9);
+
+		JLabel label10 = new JLabel(String.valueOf(drugs.get(9).getStock()));
+		label10.setFont(new Font("Tahoma", Font.BOLD, 15));
+		label10.setBounds(435, 540, 48, 14);
+		contentPane.add(label10);
+
+		JLabel lblStockPlus = new JLabel("Stock++");
+		lblStockPlus.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 16));
+		lblStockPlus.setBounds(555, 125, 74, 30);
+		contentPane.add(lblStockPlus);
+
+		JSpinner spinner1 = new JSpinner();
+		spinner1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		spinner1.setModel(new SpinnerNumberModel(0, 0, null, new Integer(1)));
+		spinner1.setSize(70, 25);
+		spinner1.setLocation(560, 180);
+		contentPane.add(spinner1);
+
+		JSpinner spinner2 = new JSpinner();
+		spinner2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		spinner2.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spinner2.setBounds(560, 215, 70, 25);
+		contentPane.add(spinner2);
+
+		JSpinner spinner3 = new JSpinner();
+		spinner3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		spinner3.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spinner3.setSize(70, 25);
+		spinner3.setLocation(560, 255);
+		contentPane.add(spinner3);
+
+		JSpinner spinner4 = new JSpinner();
+		spinner4.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		spinner4.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spinner4.setSize(70, 25);
+		spinner4.setLocation(560, 295);
+		contentPane.add(spinner4);
+
+		JSpinner spinner5 = new JSpinner();
+		spinner5.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		spinner5.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spinner5.setSize(70, 25);
+		spinner5.setLocation(560, 335);
+		contentPane.add(spinner5);
+
+		JSpinner spinner6 = new JSpinner();
+		spinner6.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		spinner6.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spinner6.setSize(70, 25);
+		spinner6.setLocation(560, 375);
+		contentPane.add(spinner6);
+
+		JSpinner spinner7 = new JSpinner();
+		spinner7.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		spinner7.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spinner7.setSize(70, 25);
+		spinner7.setLocation(560, 415);
+		contentPane.add(spinner7);
+
+		JSpinner spinner8 = new JSpinner();
+		spinner8.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		spinner8.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spinner8.setSize(70, 25);
+		spinner8.setLocation(560, 455);
+		contentPane.add(spinner8);
+
+		JSpinner spinner9 = new JSpinner();
+		spinner9.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		spinner9.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spinner9.setSize(70, 25);
+		spinner9.setLocation(560, 495);
+		contentPane.add(spinner9);
+
+		JSpinner spinner10 = new JSpinner();
+		spinner10.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		spinner10.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spinner10.setBounds(560, 535, 70, 25);
+		contentPane.add(spinner10);
+
+		JButton btnEdit = new JButton("Edit");
+		btnEdit.setForeground(Color.BLACK);
+		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnEdit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int value1 = (int) spinner1.getValue();
+				{
+					DatabaseController.updateStock(1, value1);
+				}
+				int value2 = (int) spinner2.getValue();
+				{
+					DatabaseController.updateStock(2, value2);
+				}
+
+				int value3 = (int) spinner3.getValue();
+				{
+					DatabaseController.updateStock(3, value3);
+				}
+				int value4 = (int) spinner4.getValue();
+				{
+					DatabaseController.updateStock(4, value4);
+				}
+				int value5 = (int) spinner5.getValue();
+				{
+					DatabaseController.updateStock(5, value5);
+				}
+				int value6 = (int) spinner6.getValue();
+				{
+					DatabaseController.updateStock(6, value6);
+				}
+				int value7 = (int) spinner7.getValue();
+				{
+					DatabaseController.updateStock(7, value7);
+				}
+				int value8 = (int) spinner8.getValue();
+				{
+					DatabaseController.updateStock(8, value8);
+				}
+				int value9 = (int) spinner9.getValue();
+				{
+					DatabaseController.updateStock(9, value9);
+				}
+				int value10 = (int) spinner10.getValue();
+				{
+					DatabaseController.updateStock(10, value10);
+				}
+				try {
+					//Todo: EDIT BUTONUNA BASILDIKTAN SONRA SAYFA REFRESH EDILCEK VEYA KAPATILACAK...
+					setVisible(false);
+					
+				} catch (Exception e2) {
+					System.out.println(e2);
+				}
+				
+
+			}
+
+		});
+		btnEdit.setBounds(560, 640, 90, 30);
+		contentPane.add(btnEdit);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(176, 224, 230));
+		panel.setBounds(10, 157, 677, 427);
+		contentPane.add(panel);
+		
+		JLabel lblDrugs = new JLabel("Drugs");
+		lblDrugs.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 16));
+		lblDrugs.setBounds(60, 125, 74, 30);
+		contentPane.add(lblDrugs);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 112, 677, 2);
+		contentPane.add(separator);
+		
+		
+		
+
+	}
+}

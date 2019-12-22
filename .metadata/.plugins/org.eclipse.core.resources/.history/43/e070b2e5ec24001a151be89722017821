@@ -1,0 +1,11 @@
+package ui;
+
+import database.*;
+
+public class Run {
+	public static void main(String [] args) {
+		
+		DatabaseController.setupInitialData();
+		
+	}
+}

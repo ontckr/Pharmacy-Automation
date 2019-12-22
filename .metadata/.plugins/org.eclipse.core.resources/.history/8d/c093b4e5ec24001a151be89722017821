@@ -1,0 +1,39 @@
+package socket;
+
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+
+import model.*;
+
+public class Connection {
+	
+	
+	public static ArrayList<DrugStock> getPharmacyDrugs(String id){
+
+		ArrayList<DrugStock> drugStocks = new ArrayList<DrugStock>();
+		
+		
+		try (Socket socket = new Socket("127.0.0.1", 59898)) {
+			
+			ClientController.sendMessage("GETDRUGS",socket);
+			
+			ClientController.sendMessage(id, socket);
+		
+			
+			drugStocks = (ArrayList<DrugStock>)ClientController.receiveData(socket);
+			
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return drugStocks;
+	}
+
+}
