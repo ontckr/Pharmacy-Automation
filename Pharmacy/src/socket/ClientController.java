@@ -3,7 +3,6 @@ package socket;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.List;
 
 public class ClientController {
 	

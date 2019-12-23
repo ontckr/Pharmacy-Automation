@@ -17,12 +17,16 @@ public class Run {
 		
 		DatabaseController.setupInitialData();
 		
-		
 		try (ServerSocket listener = new ServerSocket(35000)) {
+			
             System.out.println("Server is running...");
+            
             ExecutorService pool = Executors.newFixedThreadPool(4);
+            
             while (true) {
+            	
                 pool.execute(new URLMaster(listener.accept()));
+                
             }
         } catch (IOException e) {
         	e.printStackTrace();
@@ -31,6 +35,7 @@ public class Run {
 	
 	
 	private static class URLMaster implements Runnable {
+		
         private Socket socket;
         String message;
 
@@ -48,38 +53,48 @@ public class Run {
             	message = ServerController.receiveMessage(socket);
                 
                 if (message.equals("LOGIN")) {
+                	
 					String username = ServerController.receiveMessage(socket);
 					String password = ServerController.receiveMessage(socket);
-					//Todo:Login Check
+					
 					int count = DatabaseController.LoginCheck(username, password);
 					
 					if (count == 0) {
+						
 						ServerController.sendMessage("LOGINFAILED", socket);
+						
 					}else if (count == 2) {
+						
 						ServerController.sendMessage("OK", socket);
-						message = ServerController.receiveMessage(socket);
+						
+//						message = ServerController.receiveMessage(socket);
+						
 						System.out.println(message);
-						if (message.contentEquals("USERINFO")) {
-							ArrayList<Pharmacy> pharmacy = DatabaseController.getUserInfo(username);
-							ServerController.sendData(pharmacy, socket);
-							
-						}
-						ServerController.receiveMessage(socket);
-						System.out.println(message);
-						if (message.contentEquals("GETDRUGS")) {
-							ArrayList<DrugStock> drugStocks = DatabaseController.getPharmacyStock(username);
-							ServerController.sendData(drugStocks, socket);
-						}
+						
 					}
+				}  
+             
+                else if (message.contentEquals("USERINFO")) {
+                	
+					String username = ServerController.receiveMessage(socket);
+					
+					ArrayList<Pharmacy> pharmacy = DatabaseController.getUserInfo(username);
+					
+					ServerController.sendData(pharmacy, socket);
 					
 				}
-                
-                
+				else if (message.contentEquals("GETDRUGS")) {
+					
+					String username = ServerController.receiveMessage(socket);
+					
+					ArrayList<DrugStock> drugStocks = DatabaseController.getPharmacyStock(username);
+					
+					ServerController.sendData(drugStocks, socket);
+					
+				}
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
     }
 }

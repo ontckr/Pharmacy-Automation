@@ -2,50 +2,30 @@ package ui;
 
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.awt.event.ActionEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.Font;
-import java.awt.Window.Type;
-import java.awt.Dialog.ModalExclusionType;
 import model.*;
 import socket.ClientConnection;
-import socket.ClientController;
 
 public class LoginPage extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField usernameText;
 	private JPasswordField passwordField;
-
 	private static LoginPage login_page;
-	
+
 	public static void main(String[] args) throws IOException {
-		
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -98,39 +78,40 @@ public class LoginPage extends JFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
+				
 				int id = 0;
+				
 				String name = null;
 				String address = null;
 				String email = null;
 				String district = null;
 				String phone = null;
+				
 				boolean result = ClientConnection.login(usernameText.getText(), passwordField.getText());
+				
 				System.out.println("USER main page result: "+result);
+				
 				if (result == true) {
 					
 					ArrayList<Pharmacy> pharmacies=ClientConnection.getUserInfo(usernameText.getText());
-					for (Pharmacy pharmacy : pharmacies) {
-						System.out.println("User: "+pharmacy.getName());
-						 id = pharmacy.getId();
-						 name=pharmacy.getName();
-						 address = pharmacy.getAddress();
-						 email=pharmacy.getEmail();
-						 district=pharmacy.getDistrict();
-						 phone=pharmacy.getPhone();
-						 
-					}
-					UserMainPage userMainPage = new UserMainPage(id,usernameText.getText(),name,address,email,district,phone);
+					
+					
+					Pharmacy pharmacy = pharmacies.get(0);
+					System.out.println("Name: "+pharmacy.getName());
+					System.out.println("Email: "+pharmacy.getEmail());
+					System.out.println("ID: "+pharmacy.getId());
+					System.out.println("Username: "+pharmacy.getUsername());
+
+
+					UserMainPage userMainPage = new UserMainPage(pharmacy.getId(),pharmacy.getUsername(),pharmacy.getName(),pharmacy.getAddress(),pharmacy.getEmail(),pharmacy.getDistrict(),pharmacy.getPhone());
+					
 					userMainPage.setVisible(true);
 					
-					System.out.println("user login");
-					String usernameString = usernameText.getText();
-					System.out.println("User : " + usernameString);	
 					setVisible(false);
+					
 				}else {
 					JOptionPane.showMessageDialog(null, "Username and password incorrect");
 				}
-						 
-		
 			}
 		});
 		btnLogin.setBounds(89, 170, 89, 23);

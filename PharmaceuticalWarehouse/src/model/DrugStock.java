@@ -1,6 +1,8 @@
 package model;
 
-public class DrugStock {
+import java.io.Serializable;
+
+public class DrugStock implements Serializable{
 
 	private int stock;
 	private String name;

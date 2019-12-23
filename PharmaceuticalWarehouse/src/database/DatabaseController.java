@@ -29,7 +29,7 @@ public class DatabaseController {
 				+ "name text NOT NULL, \n" + "box_size text NOT NULL \n" + ");";
 
 		String pharmacyDrugsSql = "CREATE TABLE IF NOT EXISTS pharmacydrugs (\n" + "id integer PRIMARY KEY,\n"
-				+ "pharmacy_id integer NOT NULL,\n" + "drug_id integer NOT NULL,\n" + "stock integer NOT NULL\n" + ");";
+				+ "pharmacy_username TEXT NOT NULL,\n" + "drug_id integer NOT NULL,\n" + "stock integer NOT NULL\n" +  ");";
 		
 		
 		try (Connection conn = DriverManager.getConnection(url); Statement stmt = conn.createStatement()) {

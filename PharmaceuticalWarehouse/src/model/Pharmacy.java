@@ -1,7 +1,9 @@
 package model;
 
+import java.io.Serializable;
 
-public class Pharmacy {
+public class Pharmacy implements Serializable {
+	
 	private int id;
 	private String name;
 	private String address;
@@ -9,6 +11,7 @@ public class Pharmacy {
 	private String username;
 	private String district;
 	private String phone;
+	
 	public Pharmacy(int id, String name, String address, String email, String username, String district, String phone) {
 		this.id = id;
 		this.name = name;

@@ -1,7 +1,8 @@
 package model;
 
+import java.io.Serializable;
 
-public class Pharmacy {
+public class Pharmacy implements Serializable{
 	private int id;
 	private String name;
 	private String address;
