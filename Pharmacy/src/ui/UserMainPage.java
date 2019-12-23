@@ -74,7 +74,7 @@ public class UserMainPage extends JFrame {
 		this.email = email;
 		this.district = district;
 		this.phone = phone;
-
+		
 		ArrayList<DrugStock> drugs = ClientConnection.getPharmacyDrugs(username);
 		
 

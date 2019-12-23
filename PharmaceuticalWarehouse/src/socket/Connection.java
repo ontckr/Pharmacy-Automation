@@ -11,13 +11,13 @@ import model.*;
 public class Connection {
 	
 	public static void checkLogin() {
-		/*
-		 * get sell data from pharmacy
-		 * yeni datayý göndercek
-		 * refresh eklencek
-		 * */
+		
 	}
-	
+	/*
+	 * get sell data from pharmacy
+	 * yeni datayý göndercek
+	 * refresh eklencek
+	 * */
 	
 
 }

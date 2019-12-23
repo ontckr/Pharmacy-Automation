@@ -98,8 +98,37 @@ public class LoginPage extends JFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
+				int id = 0;
+				String name = null;
+				String address = null;
+				String email = null;
+				String district = null;
+				String phone = null;
 				boolean result = ClientConnection.login(usernameText.getText(), passwordField.getText());
-				System.out.println(result);
+				System.out.println("USER main page result: "+result);
+				if (result == true) {
+					
+					ArrayList<Pharmacy> pharmacies=ClientConnection.getUserInfo(usernameText.getText());
+					for (Pharmacy pharmacy : pharmacies) {
+						System.out.println("User: "+pharmacy.getName());
+						 id = pharmacy.getId();
+						 name=pharmacy.getName();
+						 address = pharmacy.getAddress();
+						 email=pharmacy.getEmail();
+						 district=pharmacy.getDistrict();
+						 phone=pharmacy.getPhone();
+						 
+					}
+					UserMainPage userMainPage = new UserMainPage(id,usernameText.getText(),name,address,email,district,phone);
+					userMainPage.setVisible(true);
+					
+					System.out.println("user login");
+					String usernameString = usernameText.getText();
+					System.out.println("User : " + usernameString);	
+					setVisible(false);
+				}else {
+					JOptionPane.showMessageDialog(null, "Username and password incorrect");
+				}
 						 
 		
 			}

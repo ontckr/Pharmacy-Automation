@@ -9,6 +9,7 @@ import java.util.concurrent.Executors;
 
 import database.*;
 import model.DrugStock;
+import model.Pharmacy;
 import socket.ServerController;
 
 public class Run {
@@ -46,21 +47,33 @@ public class Run {
                 
             	message = ServerController.receiveMessage(socket);
                 
-                if (message.equals("GETDRUGS")) {
-                	
-                	System.out.print("ilaclar alindi");
-                	
-                	String username = ServerController.receiveMessage(socket);
-                	
-                	ArrayList<DrugStock> drugStocks = DatabaseController.getPharmacyStock(username);
-                	
-                	ServerController.sendData(drugStocks, socket);
-                }else if (message.equals("LOGIN")) {
+                if (message.equals("LOGIN")) {
 					String username = ServerController.receiveMessage(socket);
 					String password = ServerController.receiveMessage(socket);
 					//Todo:Login Check
-					ServerController.sendMessage("OK", socket);
+					int count = DatabaseController.LoginCheck(username, password);
+					
+					if (count == 0) {
+						ServerController.sendMessage("LOGINFAILED", socket);
+					}else if (count == 2) {
+						ServerController.sendMessage("OK", socket);
+						message = ServerController.receiveMessage(socket);
+						System.out.println(message);
+						if (message.contentEquals("USERINFO")) {
+							ArrayList<Pharmacy> pharmacy = DatabaseController.getUserInfo(username);
+							ServerController.sendData(pharmacy, socket);
+							
+						}
+						ServerController.receiveMessage(socket);
+						System.out.println(message);
+						if (message.contentEquals("GETDRUGS")) {
+							ArrayList<DrugStock> drugStocks = DatabaseController.getPharmacyStock(username);
+							ServerController.sendData(drugStocks, socket);
+						}
+					}
+					
 				}
+                
                 
             } catch (IOException e) {
                 e.printStackTrace();
