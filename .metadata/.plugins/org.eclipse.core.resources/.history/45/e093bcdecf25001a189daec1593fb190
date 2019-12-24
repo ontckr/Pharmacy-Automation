@@ -1,0 +1,43 @@
+package model;
+
+
+public class Pharmacy {
+	private int id;
+	private String name;
+	private String address;
+	private String email;
+	private String username;
+	private String district;
+	private String phone;
+	public Pharmacy(int id, String name, String address, String email, String username, String district, String phone) {
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.email = email;
+		this.username = username;
+		this.district = district;
+		this.phone = phone;
+	}
+	public String getName() {
+		return name;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public String getDistrict() {
+		return district;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public int getId() {
+		return id;
+	}
+	
+}

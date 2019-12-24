@@ -1,0 +1,38 @@
+package ui;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JButton;
+
+public class SellDrugPage extends JFrame {
+	
+	private String drug;
+	private int id;
+	private JPanel contentPane;
+	private JFrame frame;
+	public SellDrugPage(String drug,int id) {
+		
+		this.drug=drug;
+		this.id=id;
+		setBounds(100, 100, 300, 200);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel(drug);
+		lblNewLabel.setBounds(10, 45, 161, 35);
+		contentPane.add(lblNewLabel);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setBounds(181, 45, 93, 35);
+		contentPane.add(spinner);
+		
+		JButton btnNewButton = new JButton("OK");
+		btnNewButton.setBounds(185, 127, 89, 23);
+		contentPane.add(btnNewButton);
+	}
+}
