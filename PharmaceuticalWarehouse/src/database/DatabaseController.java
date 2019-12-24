@@ -151,7 +151,7 @@ public class DatabaseController {
 		return drugs;
 
 	}
-	public static ArrayList<BoxSize> getBoxSizes() {
+	public static ArrayList<BoxSize> getDrugInfo() {
 
 		ArrayList<BoxSize> boxSizes = new ArrayList<BoxSize>();
 

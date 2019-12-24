@@ -47,13 +47,13 @@ public class AdminMainPage extends JFrame {
 		btnNewPharmacy.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				NewPharmacyPage newPharmacyPage = null;
+				NewPharmacy newPharmacy = null;
 				try {
-					newPharmacyPage = new NewPharmacyPage(adminMainPage);
+					newPharmacy = new NewPharmacy(adminMainPage);
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}
-				newPharmacyPage.setVisible(true);
+				newPharmacy.setVisible(true);
 			}
 		});
 		

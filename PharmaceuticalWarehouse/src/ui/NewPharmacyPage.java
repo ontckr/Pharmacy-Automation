@@ -52,7 +52,7 @@ public class NewPharmacyPage extends JFrame {
 
 	public NewPharmacyPage(AdminMainPage adminMainPage) throws ParseException {
 		this.adminMainPage = adminMainPage;
-		ArrayList<BoxSize> boxSizes = DatabaseController.getBoxSizes();
+		ArrayList<BoxSize> boxSizes = DatabaseController.getDrugInfo();
 		setResizable(false);
 		
 		setTitle("Add New Pharmacy");
