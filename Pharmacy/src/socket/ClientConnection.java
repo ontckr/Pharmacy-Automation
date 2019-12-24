@@ -9,9 +9,9 @@ import model.*;
 
 public class ClientConnection {
 
-	public static boolean login(String username, String password) {
+	public static int login(String username, String password) {
 		
-		boolean result = false;
+		int result = 0 ;
 		
 		try (Socket socket = new Socket("127.0.0.1", 35000)) {
 
@@ -24,23 +24,23 @@ public class ClientConnection {
 			
 			if (messageString.equals("OK")) {
 				
-				result = true;
+				result = 1;
 				
 				System.out.print("Login Succesful...");
 
 			} else if (messageString.equals("LOGINFAILED")) {
 				
-				result = false;
+				result = 0;
 				
 				System.out.print("Username and password incorrect");
 				
 			}
 
-		} catch (UnknownHostException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
+			result = -1;
 		}
+
 		return result;
 	}
 

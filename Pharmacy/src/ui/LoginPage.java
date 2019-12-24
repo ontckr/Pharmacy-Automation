@@ -71,7 +71,6 @@ public class LoginPage extends JFrame {
 		contentPane.add(passwordField);
 
 		
-
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
@@ -80,18 +79,18 @@ public class LoginPage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				int id = 0;
-				
 				String name = null;
 				String address = null;
 				String email = null;
 				String district = null;
 				String phone = null;
 				
-				boolean result = ClientConnection.login(usernameText.getText(), passwordField.getText());
+				int result = ClientConnection.login(usernameText.getText(), passwordField.getText());
 				
 				System.out.println("USER main page result: "+result);
 				
-				if (result == true) {
+				
+				if (result == 1) {
 					
 					ArrayList<Pharmacy> pharmacies=ClientConnection.getUserInfo(usernameText.getText());
 					
@@ -109,8 +108,11 @@ public class LoginPage extends JFrame {
 					
 					setVisible(false);
 					
-				}else {
+				}else if(result == 0) {
 					JOptionPane.showMessageDialog(null, "Username and password incorrect");
+				}else if(result == -1){
+					JOptionPane.showMessageDialog(null, "Server connection lost! ");
+
 				}
 			}
 		});

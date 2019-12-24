@@ -9,7 +9,6 @@
     <fullyQualifiedTypeName name="java.net.Socket"/>
     <fullyQualifiedTypeName name="java.io.IOException"/>
     <fullyQualifiedTypeName name="java.util.concurrent.Executors"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="model.DrugStock"/>
     <fullyQualifiedTypeName name="database.DatabaseController"/>
     <fullyQualifiedTypeName name="socket.ServerController"/>
@@ -20,4 +19,8 @@
     <fullyQualifiedTypeName name="socket.ClientConnection"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="ui.UserMainPage"/>
+    <fullyQualifiedTypeName name="com.sun.tools.classfile.Annotation.element_value"/>
+    <fullyQualifiedTypeName name="model.Pharmacy"/>
+    <fullyQualifiedTypeName name="java.io.Serializable"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>

@@ -6,7 +6,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import database.*;
 import model.DrugStock;
 import model.Pharmacy;
@@ -17,11 +16,17 @@ public class Run {
 		
 		DatabaseController.setupInitialData();
 		
+	
+		new AdminMainPage();
+		
+		
+		
 		try (ServerSocket listener = new ServerSocket(35000)) {
 			
             System.out.println("Server is running...");
             
             ExecutorService pool = Executors.newFixedThreadPool(4);
+            
             
             while (true) {
             	
@@ -31,6 +36,8 @@ public class Run {
         } catch (IOException e) {
         	e.printStackTrace();
 		}
+	
+			
 	}
 	
 	
@@ -46,10 +53,10 @@ public class Run {
         @Override
         public void run() {
 
-            System.out.println("Connected: " + socket);
-
             try {
-                
+            	
+            	System.out.println("Connected: " + socket);
+            	
             	message = ServerController.receiveMessage(socket);
                 
                 if (message.equals("LOGIN")) {

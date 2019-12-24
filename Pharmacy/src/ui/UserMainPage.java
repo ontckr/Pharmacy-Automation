@@ -151,18 +151,9 @@ public class UserMainPage extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*
-				SellPage sellPage=null;
-				UserMainPage userMainPage=null;
-				try {
-					sellPage = new SellPage(username);
-					//userMainPage.setVisible(false);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				sellPage.setVisible(true);
-				*/
+				
+				new SellPage(username);
+				
 			}
 			
 		});

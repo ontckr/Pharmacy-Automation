@@ -34,24 +34,21 @@ import helper.*;
 public class NewPharmacyPage extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField nameText;
-	private JTextField addressText;
-	private JTextField emailText;
 	private JPasswordField passwordField;
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
-	private JTextField textField;
-
-	private AdminMainPage adminMainPage;
-	
-	Connection connection = null;
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JTextField textField_0;
+	
+	private AdminMainPage adminMainPage;
+	
+	Connection connection = null;
+	
 
 	public NewPharmacyPage(AdminMainPage adminMainPage) throws ParseException {
 		this.adminMainPage = adminMainPage;
@@ -282,6 +279,7 @@ public class NewPharmacyPage extends JFrame {
 		JButton btnCreate = new JButton("Create");
 		btnCreate.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		btnCreate.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
 				
 				UserNameConverter uConverter = new UserNameConverter();
@@ -298,15 +296,6 @@ public class NewPharmacyPage extends JFrame {
 						phoneText.getText());
 				adminMainPage.refreshTable();
 				
-				/*
-				String [] a = new String[10];
-				
-				for(int i = 0 ; i<=9 ;i++ ) {
-					
-					a[i] = "textField_" + i + ".getText()";
-					
-				}
-				*/
 				
 				DatabaseController.newPharmacyStock(username, 1 ,Integer.parseInt(textField_0.getText()));
 				DatabaseController.newPharmacyStock(username, 2 ,Integer.parseInt(textField_1.getText()));
@@ -319,8 +308,6 @@ public class NewPharmacyPage extends JFrame {
 				DatabaseController.newPharmacyStock(username, 9 ,Integer.parseInt(textField_8.getText()));
 				DatabaseController.newPharmacyStock(username, 10 ,Integer.parseInt(textField_9.getText()));
 
-				
-				
 				setVisible(false);
 			}
 		});
