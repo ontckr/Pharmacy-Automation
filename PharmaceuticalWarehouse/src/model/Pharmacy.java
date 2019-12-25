@@ -21,6 +21,7 @@ public class Pharmacy implements Serializable {
 		this.district = district;
 		this.phone = phone;
 	}
+	
 	public String getName() {
 		return name;
 	}

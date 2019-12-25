@@ -69,11 +69,9 @@ public class DatabaseController {
 		}
 
 		String addDrugs = "INSERT INTO drugs (name,box_size) VALUES (\"Talcid 500 mg\" ,\"10\"), (\"Ultravist Flakon 300\",\"10\"), (\"Visanne Tablet 2 mg\",\"10\"), (\"Minoset 500 mg\",\"10\"), (\"Aspirin 500 mg\",\"10\"), (\"Baclan 75 mg\",\"10\"), (\"Ciproxin 500 mg\",\"10\"), (\"Glucobay Tablet 100 mg\",\"10\"), (\"Luminal 100 mg Tablet\",\"10\"), (\"Xofigo\",\"10\");";
-		String addAdmin = "INSERT INTO pharmacy (name, username, password, phone) VALUES ('admin', 'admin', '1', '110');";
-		 
+		
 		try (Connection conn = DriverManager.getConnection(url); Statement stmt = conn.createStatement()) {
 			stmt.execute(addDrugs);
-			stmt.execute(addAdmin);
 			
 			stmt.close();
 
@@ -81,8 +79,6 @@ public class DatabaseController {
 			System.out.println(e.getMessage());
 			System.out.println("3");
 		}
-	
-		
 	}
 
 	public static void newPharmacy(
@@ -178,7 +174,6 @@ public class DatabaseController {
 			System.out.println("15");
 		}
 		
-		
 		return boxSizes;
 
 	}
@@ -221,13 +216,39 @@ public class DatabaseController {
 		
 	
 	}
-	public static ArrayList<Pharmacy> getUsers(){
+	public static Pharmacy getUser(int pharmacyId){
 		ArrayList<Pharmacy> userList = new ArrayList<Pharmacy>();
 		try(Connection conn = DriverManager.getConnection(url);) {
 			
 			
+			String queryString = "SELECT id, name, address, email, username, district, phone FROM pharmacy WHERE id= " + pharmacyId + ";";
+			Statement pStatement = conn.createStatement();
+
+			ResultSet resultSet = pStatement.executeQuery(queryString);
+
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				String name = resultSet.getString("name");
+				String address = resultSet.getString("address");
+				String email = resultSet.getString("email");
+				String username = resultSet.getString("username");
+				String district = resultSet.getString("district");
+				String phone = resultSet.getString("phone");
+				Pharmacy pharmacy = new Pharmacy(id,name,address,email,username,district,phone);
+				userList.add(pharmacy);
+			}
+			pStatement.close();
+		} catch (Exception exception) {
+			JOptionPane.showMessageDialog(null, exception);
+		}
+		
+		return userList.get(0);
+	}
+	
+	public static ArrayList<Pharmacy> getUsers(){
+		ArrayList<Pharmacy> userList = new ArrayList<Pharmacy>();
+		try(Connection conn = DriverManager.getConnection(url);) {
 			
-			//String queryString = "SELECT id, name, address, email, username, district, phone FROM pharmacy WHERE username != 'admin';";
 			String queryString = "SELECT id, name, address, email, username, district, phone FROM pharmacy;";
 			Statement pStatement = conn.createStatement();
 
@@ -253,9 +274,10 @@ public class DatabaseController {
 		return userList;
 	}
 	public static ArrayList<Pharmacy> getUserInfo(String user_name){
+		
 		ArrayList<Pharmacy> userList = new ArrayList<Pharmacy>();
+		
 		try(Connection conn = DriverManager.getConnection(url);) {
-			
 			
 			
 			String queryString = "SELECT id,name, address, email, username, district, phone FROM pharmacy WHERE username = '" + user_name + "';";
@@ -287,13 +309,16 @@ public class DatabaseController {
 	public static void updateStock(int id,int value) {
 		
 		try (Connection conn = DriverManager.getConnection(url);){
+			
 			String queryString="UPDATE pharmacydrugs SET stock=stock+'"+value+"' WHERE drug_id= '"+id+"'";
+			
 			PreparedStatement pStatement = conn.prepareStatement(queryString);
+			
 			pStatement.executeUpdate();
 			pStatement.close();
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, exception);
-			System.out.println("9");
 		}
 	}
 	
@@ -315,11 +340,52 @@ public class DatabaseController {
 
 		} catch (Exception exception) {
 			JOptionPane.showMessageDialog(null, exception);
-			System.out.println("11");
 		}
 		
 	}
 	
+	public static void deletePharmacy(int id, String username) {
+		
+		try (Connection conn = DriverManager.getConnection(url);){
+			
+	        String removePharmacy = "DELETE FROM pharmacy WHERE id = ?";
+			String removePharmacyDrugString = "DELETE FROM pharmacydrugs WHERE pharmacy_username =  ? ";
+
+			PreparedStatement pStatement = conn.prepareStatement(removePharmacy);
+			PreparedStatement pStatement2 = conn.prepareStatement(removePharmacyDrugString);
+
+			pStatement.setInt(1, id);
+			pStatement.executeUpdate();
+
+			pStatement2.setString(1, username);
+			pStatement2.executeUpdate();
+			
+			pStatement.close();
+			
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Pharmacy delete exception");
+			System.out.println(e);
+		}
+	}
+/*
+	public static void deletePharmacyDrugs(String username) {
+		
+		try (Connection conn = DriverManager.getConnection(url);){
+			
+			String removePharmacyDrugString = "DELETE FROM pharmacydrugs WHERE pharmacy_username =  ? ";
+			
+			PreparedStatement pStatement = conn.prepareStatement(removePharmacyDrugString);
+
+			pStatement.setString(1, username);
+			pStatement.executeUpdate();
+			pStatement.close();
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Pharmacydrug delete exception");
+		}
+	}
+*/
 
 	
 }

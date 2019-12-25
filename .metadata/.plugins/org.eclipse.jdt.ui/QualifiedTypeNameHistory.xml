@@ -10,17 +10,18 @@
     <fullyQualifiedTypeName name="java.io.IOException"/>
     <fullyQualifiedTypeName name="java.util.concurrent.Executors"/>
     <fullyQualifiedTypeName name="model.DrugStock"/>
-    <fullyQualifiedTypeName name="database.DatabaseController"/>
     <fullyQualifiedTypeName name="socket.ServerController"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="com.sun.jdi.connect.spi.Connection"/>
     <fullyQualifiedTypeName name="socket.Connection"/>
     <fullyQualifiedTypeName name="socket.ClientController"/>
     <fullyQualifiedTypeName name="socket.ClientConnection"/>
-    <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="ui.UserMainPage"/>
     <fullyQualifiedTypeName name="com.sun.tools.classfile.Annotation.element_value"/>
     <fullyQualifiedTypeName name="model.Pharmacy"/>
     <fullyQualifiedTypeName name="java.io.Serializable"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="database.DatabaseController"/>
+    <fullyQualifiedTypeName name="jdk.internal.agent.resources.agent"/>
 </qualifiedTypeNameHistroy>

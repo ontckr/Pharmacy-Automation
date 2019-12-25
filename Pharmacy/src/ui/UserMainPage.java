@@ -49,6 +49,7 @@ import com.sun.jdi.connect.spi.Connection;
 import javax.swing.JButton;
 import model.*;
 import socket.ClientController;
+import javax.swing.JTextField;
 public class UserMainPage extends JFrame {
 
 	private JPanel contentPane;
@@ -64,6 +65,7 @@ public class UserMainPage extends JFrame {
 	private String phone;
 	private int id;
 	private ChartPanel chartPanel;
+	private JTextField textField;
 
 	public UserMainPage(int id, String username, String name, String address, String email, String district,
 			String phone) {
@@ -79,24 +81,11 @@ public class UserMainPage extends JFrame {
 		
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 800, 684);
+		setBounds(100, 100, 800, 631);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		JLabel nameLabel = new JLabel("New label");
-		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		nameLabel.setBounds(80, 35, 130, 28);
-		contentPane.add(nameLabel);
-		nameLabel.setText(name);
-
-		JLabel addressLabel = new JLabel("New label");
-		addressLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		addressLabel.setBounds(550, 35, 130, 28);
-		contentPane.add(addressLabel);
-
-		addressLabel.setText(address);
 
 		JLabel emailLabel = new JLabel("New label");
 		emailLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -104,77 +93,91 @@ public class UserMainPage extends JFrame {
 		contentPane.add(emailLabel);
 		emailLabel.setText(email);
 
-		JLabel districtLabel = new JLabel("New label");
-		districtLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		districtLabel.setBounds(320, 80, 130, 30);
-		contentPane.add(districtLabel);
-		districtLabel.setText(district);
-
-		JLabel phoneLabel = new JLabel("New label");
-		phoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		phoneLabel.setBounds(80, 80, 130, 28);
-		contentPane.add(phoneLabel);
-		phoneLabel.setText(phone);
-
-		JLabel lblName = new JLabel("Name: ");
-		lblName.setFont(new Font("Century Gothic", Font.BOLD, 16));
-		lblName.setBounds(20, 40, 60, 14);
-		contentPane.add(lblName);
-
-		JLabel lblEmail = new JLabel("Email: ");
-		lblEmail.setFont(new Font("Century Gothic", Font.BOLD, 16));
-		lblEmail.setBounds(250, 40, 80, 14);
-		contentPane.add(lblEmail);
-
-		JLabel lblPhone = new JLabel("Phone: ");
-		lblPhone.setFont(new Font("Century Gothic", Font.BOLD, 16));
-		lblPhone.setBounds(20, 85, 60, 14);
-		contentPane.add(lblPhone);
-
-		JLabel lblDistrict = new JLabel("District: ");
-		lblDistrict.setFont(new Font("Century Gothic", Font.BOLD, 16));
-		lblDistrict.setBounds(250, 85, 100, 14);
-		contentPane.add(lblDistrict);
-
 		JLabel lblAdress = new JLabel("Address: ");
 		lblAdress.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		lblAdress.setBounds(470, 40, 80, 14);
 		contentPane.add(lblAdress);
-
-		JButton sellButton = new JButton("Sell");
-		sellButton.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
-		sellButton.setBounds(680, 20, 89, 23);
-		contentPane.add(sellButton);
-		
-		sellButton.addActionListener(new ActionListener() {
-			
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				new SellPage(username);
-				
-			}
-			
-		});
 		
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(230, 230, 250));
-		panel.setBounds(10, 10, 768, 125);
+		panel.setBounds(20, 10, 758, 125);
 		contentPane.add(panel);
+				panel.setLayout(null);
+		
+				JLabel addressLabel = new JLabel("New label");
+				addressLabel.setBounds(544, 25, 130, 28);
+				panel.add(addressLabel);
+				addressLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				
+						addressLabel.setText(address);
+						
+								JButton sellButton = new JButton("Sell Drugs");
+								sellButton.setBounds(566, 70, 140, 37);
+								panel.add(sellButton);
+								sellButton.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+								
+										JLabel lblName = new JLabel("Name: ");
+										lblName.setBounds(17, 32, 60, 14);
+										panel.add(lblName);
+										lblName.setFont(new Font("Century Gothic", Font.BOLD, 16));
+										
+												JLabel lblPhone = new JLabel("Phone: ");
+												lblPhone.setBounds(17, 73, 60, 14);
+												panel.add(lblPhone);
+												lblPhone.setFont(new Font("Century Gothic", Font.BOLD, 16));
+												
+														JLabel nameLabel = new JLabel("New label");
+														nameLabel.setBounds(77, 25, 130, 28);
+														panel.add(nameLabel);
+														nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+														nameLabel.setText(name);
+														
+																JLabel phoneLabel = new JLabel("New label");
+																phoneLabel.setBounds(77, 66, 130, 28);
+																panel.add(phoneLabel);
+																phoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+																phoneLabel.setText(phone);
+																
+																		JLabel districtLabel = new JLabel("New label");
+																		districtLabel.setBounds(301, 65, 130, 30);
+																		panel.add(districtLabel);
+																		districtLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+																		districtLabel.setText(district);
+																		
+																				JLabel lblDistrict = new JLabel("District: ");
+																				lblDistrict.setBounds(229, 73, 100, 14);
+																				panel.add(lblDistrict);
+																				lblDistrict.setFont(new Font("Century Gothic", Font.BOLD, 16));
+																				
+																						JLabel lblEmail = new JLabel("Email: ");
+																						lblEmail.setBounds(229, 32, 80, 14);
+																						panel.add(lblEmail);
+																						lblEmail.setFont(new Font("Century Gothic", Font.BOLD, 16));
+								
+								sellButton.addActionListener(new ActionListener() {
+									
+									
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										
+										new SellPage(username);
+										
+									}
+									
+								});
 
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 140, 768, 2);
 		contentPane.add(separator);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 147, 768, 374);
+		tabbedPane.setBounds(10, 147, 768, 443);
 		contentPane.add(tabbedPane);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Stock", null, panel_1, null);
-		panel_1.setBackground(new Color(135, 206, 235));
+		panel_1.setBackground(new Color(255, 255, 240));
 		panel_1.setLayout(null);
 
 		// getData();
@@ -407,6 +410,23 @@ public class UserMainPage extends JFrame {
 		legend.setItemFont(labelFont);
 		chartPanel = new ChartPanel(chart);
 		tabbedPane.addTab("Chart", null, chartPanel, null);
+		
+		JPanel panel_2 = new JPanel();
+		tabbedPane.addTab("New tab", null, panel_2, null);
+		panel_2.setLayout(null);
+		
+		JTextPane textPane = new JTextPane();
+		textPane.setBounds(47, 19, 660, 317);
+		panel_2.add(textPane);
+		
+		textField = new JTextField();
+		textField.setBounds(43, 348, 527, 29);
+		panel_2.add(textField);
+		textField.setColumns(10);
+		
+		JButton btnSend = new JButton("Send");
+		btnSend.setBounds(582, 349, 125, 29);
+		panel_2.add(btnSend);
 
 	}
 }

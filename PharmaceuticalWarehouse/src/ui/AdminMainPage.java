@@ -34,17 +34,20 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.UIManager;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.SystemColor;
+import javax.swing.JList;
+import javax.swing.JTextField;
 
 public class AdminMainPage extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
 	private AdminMainPage adminMainPage;
+	private JTextField textField;
 
 	public AdminMainPage() throws IOException {
 		adminMainPage= this;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 828, 551);
+		setBounds(100, 100, 934, 551);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -73,8 +76,8 @@ public class AdminMainPage extends JFrame {
 		contentPane.add(btnNewPharmacy);
 		
 		JTextPane txtpnAsdasd = new JTextPane();
-		txtpnAsdasd.setBackground(SystemColor.textHighlight);
-		txtpnAsdasd.setBounds(443, 31, 339, 402);
+		txtpnAsdasd.setBackground(Color.WHITE);
+		txtpnAsdasd.setBounds(443, 31, 339, 421);
 		contentPane.add(txtpnAsdasd);
 
 		
@@ -82,12 +85,13 @@ public class AdminMainPage extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Name", "District", "Phone"
+				"ID", "Name", "District", "Phone"
 			}
 		));
+		table.setForeground(Color.RED);
 		
 		
-		table.setBackground(SystemColor.info);
+		table.setBackground(Color.WHITE);
 		table.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(153, 180, 209), new Color(153, 180, 209), new Color(153, 180, 209), new Color(153, 180, 209)));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setFont(new Font("Microsoft YaHei", Font.BOLD, 14));
@@ -97,14 +101,21 @@ public class AdminMainPage extends JFrame {
 		ArrayList<Pharmacy> pharmacies = DatabaseController.getUsers();
 		
 		for (Pharmacy pharmacy : pharmacies) {
-			model.addRow(new Object[]{pharmacy.getName(), pharmacy.getDistrict(), pharmacy.getPhone()});
+			model.addRow(new Object[]{pharmacy.getId(),pharmacy.getName(), pharmacy.getDistrict(), pharmacy.getPhone()});
 			
 
 		};
-		
+			
+		JScrollPane scrollPane = new JScrollPane();
 		
 		table.setFillsViewportHeight(true);
-		contentPane.add(table);
+		table.getColumnModel().getColumn(0).setMinWidth(0);
+	    table.getColumnModel().getColumn(0).setMaxWidth(0);
+	    table.getColumnModel().getColumn(0).setWidth(0);
+	    
+	    scrollPane.setBounds(20,72,390,384);
+        scrollPane.setViewportView(table);
+		contentPane.add(scrollPane);
 
 		
 		JButton editPharmacy = new JButton("Edit");
@@ -113,12 +124,19 @@ public class AdminMainPage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 		
 				EditPharmacyPage editPharmacyPage=null;
+				
+				int selectedRow = table.getSelectedRow();
+				int id = (int) table.getValueAt(selectedRow, 0);				
+				
+				
 				int selectedIndex = table.getSelectedRow();
-				System.out.println("Selected ind"+selectedIndex);
+				
+				System.out.println("Selected index"+selectedIndex);
+				
 				if (selectedIndex < 0) {
 					JOptionPane.showMessageDialog(null, "Select a pharmacy to edit.");
 				}else {
-					Pharmacy selectedUser = pharmacies.get(selectedIndex);
+					Pharmacy selectedUser = DatabaseController.getUser(id);
 					System.out.println(selectedIndex);
 					System.out.println("Selected user: "+ selectedUser.getName());
 				
@@ -128,8 +146,49 @@ public class AdminMainPage extends JFrame {
 				
 			}
 		});
-		editPharmacy.setBounds(168, 456, 89, 30);
+		
+		editPharmacy.setBounds(302, 468, 108, 30);
 		contentPane.add(editPharmacy);
+		
+		JList list = new JList();
+		list.setBounds(794, 31, 120, 421);
+		contentPane.add(list);
+		
+		JButton btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int selectedIndex = table.getSelectedRow();
+				
+				int id = (int) table.getValueAt(selectedIndex, 0);	
+
+				System.out.println("silmek icin sectigin id = " + id);
+				if (selectedIndex < 0) {
+					JOptionPane.showMessageDialog(null, "Select a pharmacy to delete.");
+				}else {
+					Pharmacy selectedUser = DatabaseController.getUser(id);
+
+					System.out.println("Selected user: "+ selectedUser.getUsername());
+					
+					String username = selectedUser.getUsername();
+					
+					DatabaseController.deletePharmacy(id, username);
+					refreshTable();
+					
+				}
+			}
+		});
+		btnDelete.setBounds(20, 469, 117, 29);
+		contentPane.add(btnDelete);
+		
+		textField = new JTextField();
+		textField.setBounds(443, 464, 339, 26);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JButton btnSend = new JButton("Send");
+		btnSend.setBounds(794, 464, 120, 29);
+		contentPane.add(btnSend);
 		
 	}
 	
@@ -139,7 +198,7 @@ public class AdminMainPage extends JFrame {
 		model.setRowCount(0);
 		ArrayList<Pharmacy> pharmacies = DatabaseController.getUsers();
 		for (Pharmacy pharmacy : pharmacies) {
-			model.addRow(new Object[]{pharmacy.getName(), pharmacy.getDistrict(), pharmacy.getPhone()});
+			model.addRow(new Object[]{pharmacy.getId(),pharmacy.getName(), pharmacy.getDistrict(), pharmacy.getPhone()});
 
 		}
 	}

@@ -44,10 +44,6 @@ public class ClientConnection {
 		return result;
 	}
 
-	/*
-	 * Chat Sell Get Pharmacy Drug Info Logout
-	 */
-
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Pharmacy> getUserInfo(String username) {
 		
