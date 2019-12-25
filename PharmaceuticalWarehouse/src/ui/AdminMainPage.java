@@ -1,8 +1,17 @@
 package ui;
 
+import java.awt.BorderLayout;
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
@@ -10,16 +19,21 @@ import javax.swing.JTextPane;
 import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
+
+import database.DatabaseController;
+import model.Pharmacy;
+
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.border.LineBorder;
 import java.awt.Color;
+import javax.swing.border.EtchedBorder;
+import javax.swing.UIManager;
+import javax.swing.border.SoftBevelBorder;
 import java.awt.SystemColor;
-import model.*;
-import database.*;
-
 
 public class AdminMainPage extends JFrame {
 
@@ -27,15 +41,13 @@ public class AdminMainPage extends JFrame {
 	private JTable table;
 	private AdminMainPage adminMainPage;
 
-	public AdminMainPage() {
-		setResizable(false);
-		setVisible(true);
+	public AdminMainPage() throws IOException {
+		adminMainPage= this;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 828, 551);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
 		
 		JLabel lblAdmin = new JLabel("Pharmaceutical Warehouse");
 		lblAdmin.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -45,20 +57,25 @@ public class AdminMainPage extends JFrame {
 		JButton btnNewPharmacy = new JButton("New Pharmacy");
 		btnNewPharmacy.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnNewPharmacy.addActionListener(new ActionListener() {
-			
 			public void actionPerformed(ActionEvent e) {
-				NewPharmacy newPharmacy = null;
+				NewPharmacy newPharmacyPage = null;
+			
 				try {
-					newPharmacy = new NewPharmacy(adminMainPage);
+					newPharmacyPage = new NewPharmacy(adminMainPage);
 				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				newPharmacy.setVisible(true);
+				newPharmacyPage.setVisible(true);
 			}
 		});
-		
 		btnNewPharmacy.setBounds(250, 25, 160, 30);
 		contentPane.add(btnNewPharmacy);
+		
+		JTextPane txtpnAsdasd = new JTextPane();
+		txtpnAsdasd.setBackground(SystemColor.textHighlight);
+		txtpnAsdasd.setBounds(443, 31, 339, 402);
+		contentPane.add(txtpnAsdasd);
 
 		
 		table = new JTable(new DefaultTableModel(
@@ -68,10 +85,9 @@ public class AdminMainPage extends JFrame {
 				"Name", "District", "Phone"
 			}
 		));
-		table.setForeground(Color.BLACK);
 		
 		
-		table.setBackground(Color.WHITE);
+		table.setBackground(SystemColor.info);
 		table.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(153, 180, 209), new Color(153, 180, 209), new Color(153, 180, 209), new Color(153, 180, 209)));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setFont(new Font("Microsoft YaHei", Font.BOLD, 14));
@@ -82,6 +98,8 @@ public class AdminMainPage extends JFrame {
 		
 		for (Pharmacy pharmacy : pharmacies) {
 			model.addRow(new Object[]{pharmacy.getName(), pharmacy.getDistrict(), pharmacy.getPhone()});
+			
+
 		};
 		
 		
@@ -96,19 +114,15 @@ public class AdminMainPage extends JFrame {
 		
 				EditPharmacyPage editPharmacyPage=null;
 				int selectedIndex = table.getSelectedRow();
-				
-			
+				System.out.println("Selected ind"+selectedIndex);
 				if (selectedIndex < 0) {
 					JOptionPane.showMessageDialog(null, "Select a pharmacy to edit.");
 				}else {
 					Pharmacy selectedUser = pharmacies.get(selectedIndex);
 					System.out.println(selectedIndex);
-					System.out.println(selectedUser.getName());
-					try {
-						editPharmacyPage = new EditPharmacyPage(adminMainPage,selectedUser);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
+					System.out.println("Selected user: "+ selectedUser.getName());
+				
+					editPharmacyPage = new EditPharmacyPage(adminMainPage,selectedUser);
 					editPharmacyPage.setVisible(true);
 				}
 				
@@ -126,7 +140,7 @@ public class AdminMainPage extends JFrame {
 		ArrayList<Pharmacy> pharmacies = DatabaseController.getUsers();
 		for (Pharmacy pharmacy : pharmacies) {
 			model.addRow(new Object[]{pharmacy.getName(), pharmacy.getDistrict(), pharmacy.getPhone()});
+
 		}
-		
 	}
 }

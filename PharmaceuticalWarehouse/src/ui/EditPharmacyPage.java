@@ -31,7 +31,7 @@ public class EditPharmacyPage extends JFrame {
 
 	private AdminMainPage adminMainPage;
 
-	public EditPharmacyPage(AdminMainPage adminMainPage, Pharmacy selectedUser) throws ParseException {
+	public EditPharmacyPage(AdminMainPage adminMainPage, Pharmacy selectedUser) {
 		setResizable(false);
 		String username = selectedUser.getUsername();
 		ArrayList<DrugStock> drugs = DatabaseController.getPharmacyStock(username);
@@ -100,7 +100,12 @@ public class EditPharmacyPage extends JFrame {
 		lblPhone.setBounds(230, 33, 68, 14);
 		contentPane.add(lblPhone);
 
-		// MaskFormatter maskFormatter = new MaskFormatter("(0###) ### ## ##");
+		try {
+			MaskFormatter maskFormatter = new MaskFormatter("(0###) ### ## ##");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		JLabel phoneText = new JLabel();
 		phoneText.setFont(new Font("Tahoma", Font.PLAIN, 15));

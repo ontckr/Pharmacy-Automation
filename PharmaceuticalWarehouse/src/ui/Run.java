@@ -17,8 +17,15 @@ public class Run {
 		DatabaseController.setupInitialData();
 		
 	
-		new AdminMainPage();
-		
+		try {
+			AdminMainPage adminMainPage = new AdminMainPage();
+			adminMainPage.setVisible(true);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			System.out.println(e1);
+		}
+	
 		
 		
 		try (ServerSocket listener = new ServerSocket(35000)) {

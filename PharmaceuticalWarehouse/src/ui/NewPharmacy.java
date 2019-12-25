@@ -21,10 +21,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import database.DatabaseController;
+import helper.UserNameConverter;
 import model.BoxSize;
 
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -47,6 +50,7 @@ public class NewPharmacy extends JFrame {
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JTextField textField_0;
+	private JTextField textField;
 	
 
 	/**
@@ -252,19 +256,7 @@ public class NewPharmacy extends JFrame {
 		lblBoxSize.setBounds(495, 10, 74, 20);
 		contentPane.add(lblBoxSize);
 		
-		JTextField textField_1 = new JTextField();
-		textField_1.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
-		textField_1.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || c == KeyEvent.VK_DELETE )) {
-					e.consume();
-					getToolkit().beep();
-				}
-			}
-		});
-		
+	
 		JLabel lblOrder = new JLabel("Order");
 		lblOrder.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		lblOrder.setBounds(694, 10, 48, 20);
@@ -275,12 +267,7 @@ public class NewPharmacy extends JFrame {
 		textField_0.setColumns(10);
 		textField_0.setBounds(694, 46, 48, 20);
 		contentPane.add(textField_0);
-		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
-		textField_1.setBounds(694, 86, 48, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+	
 		
 		textField_2 = new JTextField();
 		textField_2.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
@@ -331,6 +318,49 @@ public class NewPharmacy extends JFrame {
 		textField_9.setColumns(10);
 		textField_9.setBounds(694, 406, 48, 20);
 		contentPane.add(textField_9);
+		JButton btnCreate = new JButton("Create");
+		btnCreate.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		btnCreate.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				UserNameConverter uConverter = new UserNameConverter();
+				
+				String username = uConverter.Converter(nameText.getText());
+				
+				DatabaseController.newPharmacy(
+						nameText.getText(), 
+						addressText.getText(),
+						emailText.getText(), 
+						username,
+						passwordField.getText(), 
+						DistrictComboBox.getSelectedItem().toString(), 
+						phoneText.getText());
+				
+				
+				
+				DatabaseController.newPharmacyStock(username, 1 ,Integer.parseInt(textField_0.getText()));
+				DatabaseController.newPharmacyStock(username, 2 ,Integer.parseInt(textField.getText()));
+				DatabaseController.newPharmacyStock(username, 3 ,Integer.parseInt(textField_2.getText()));
+				DatabaseController.newPharmacyStock(username, 4 ,Integer.parseInt(textField_3.getText()));
+				DatabaseController.newPharmacyStock(username, 5 ,Integer.parseInt(textField_4.getText()));
+				DatabaseController.newPharmacyStock(username, 6 ,Integer.parseInt(textField_5.getText()));
+				DatabaseController.newPharmacyStock(username, 7 ,Integer.parseInt(textField_6.getText()));
+				DatabaseController.newPharmacyStock(username, 8 ,Integer.parseInt(textField_7.getText()));
+				DatabaseController.newPharmacyStock(username, 9 ,Integer.parseInt(textField_8.getText()));
+				DatabaseController.newPharmacyStock(username, 10 ,Integer.parseInt(textField_9.getText()));
+				adminMainPage.refreshTable();
+				setVisible(false);
+			}
+		});
+		
+		textField = new JTextField();
+		textField.setBounds(694, 86, 48, 20);
+		contentPane.add(textField);
+		textField.setColumns(10);
+	
+		btnCreate.setBounds(495, 455, 89, 23);
+		contentPane.add(btnCreate);
 		
 		
 		

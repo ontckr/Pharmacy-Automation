@@ -227,8 +227,8 @@ public class DatabaseController {
 			
 			
 			
-			String queryString = "SELECT id, name, address, email, username, district, phone FROM pharmacy WHERE username != 'admin';";
-			
+			//String queryString = "SELECT id, name, address, email, username, district, phone FROM pharmacy WHERE username != 'admin';";
+			String queryString = "SELECT id, name, address, email, username, district, phone FROM pharmacy;";
 			Statement pStatement = conn.createStatement();
 
 			ResultSet resultSet = pStatement.executeQuery(queryString);
