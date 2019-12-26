@@ -3,9 +3,18 @@ package ui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import socket.ClientConnection;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class SellDrugPage extends JFrame {
 	
@@ -13,8 +22,9 @@ public class SellDrugPage extends JFrame {
 	private int id;
 	private JPanel contentPane;
 	private JFrame frame;
-	public SellDrugPage(String drug,int id) {
-		
+	private String username;
+	public SellDrugPage(String drug,int id, String username,int stock) {
+		this.username=username;
 		this.drug=drug;
 		this.id=id;
 		setBounds(100, 100, 300, 200);
@@ -31,8 +41,34 @@ public class SellDrugPage extends JFrame {
 		spinner.setBounds(181, 45, 93, 35);
 		contentPane.add(spinner);
 		
+		
 		JButton btnNewButton = new JButton("OK");
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int value = (int) spinner.getValue();
+				if(stock!=0 && value<stock) {
+					
+					ClientConnection.sendSoldDrug(id, value, username);
+					System.out.println(drug);
+					System.out.println(id);
+					System.out.println(username);
+				}else {
+					JOptionPane.showMessageDialog(null, drug+" is not available in your stock. You can't sell "+drug);
+					setVisible(false);
+				}
+				setVisible(false);
+				
+			}
+			
+		});
+		
 		btnNewButton.setBounds(185, 127, 89, 23);
 		contentPane.add(btnNewButton);
+		
+		
 	}
 }

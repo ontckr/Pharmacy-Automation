@@ -7,9 +7,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -36,17 +38,17 @@ public class NewPharmacy extends JFrame {
 
 	private JPanel contentPane;
 	private AdminMainPage adminMainPage;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_0;
-	private JTextField textField;
-	
+	private JSpinner textField_2;
+	private JSpinner textField_3;
+	private JSpinner textField_4;
+	private JSpinner textField_5;
+	private JSpinner textField_6;
+	private JSpinner textField_7;
+	private JSpinner textField_8;
+	private JSpinner textField_9;
+	private JSpinner textField_0;
+	private JSpinner textField;
+
 
 	public NewPharmacy(AdminMainPage adminMainPage) throws ParseException {
 		
@@ -250,60 +252,54 @@ public class NewPharmacy extends JFrame {
 		lblOrder.setBounds(694, 10, 48, 20);
 		contentPane.add(lblOrder);
 		
-		textField_0 = new JTextField();
+		textField = new JSpinner();
+		textField.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+		textField.setBounds(694, 86, 48, 20);
+		contentPane.add(textField);
+		
+		textField_0 = new JSpinner();
 		textField_0.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
-		textField_0.setColumns(10);
 		textField_0.setBounds(694, 46, 48, 20);
 		contentPane.add(textField_0);
 	
 		
-		textField_2 = new JTextField();
+		textField_2 = new JSpinner();
 		textField_2.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		textField_2.setBounds(694, 126, 48, 20);
 		contentPane.add(textField_2);
-		textField_2.setColumns(10);
 		
-		textField_3 = new JTextField();
+		textField_3 = new JSpinner();
 		textField_3.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		textField_3.setBounds(694, 166, 48, 20);
 		contentPane.add(textField_3);
-		textField_3.setColumns(10);
 		
-		textField_4 = new JTextField();
+		textField_4 = new JSpinner();
 		textField_4.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		textField_4.setBounds(694, 206, 48, 20);
 		contentPane.add(textField_4);
-		textField_4.setColumns(10);
 		
-		
-		
-		textField_5 = new JTextField();
+		textField_5 = new JSpinner();
 		textField_5.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
-		textField_5.setColumns(10);
 		textField_5.setBounds(694, 246, 48, 20);
 		contentPane.add(textField_5);
 		
-		textField_6 = new JTextField();
+		textField_6 = new JSpinner();
 		textField_6.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
-		textField_6.setColumns(10);
 		textField_6.setBounds(694, 286, 48, 20);
 		contentPane.add(textField_6);
 		
-		textField_7 = new JTextField();
+		textField_7 = new JSpinner();
 		textField_7.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
-		textField_7.setColumns(10);
 		textField_7.setBounds(694, 326, 48, 20);
 		contentPane.add(textField_7);
 		
-		textField_8 = new JTextField();
+		textField_8 = new JSpinner();
 		textField_8.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
-		textField_8.setColumns(10);
 		textField_8.setBounds(694, 366, 48, 20);
 		contentPane.add(textField_8);
 		
-		textField_9 = new JTextField();
+		textField_9 = new JSpinner();
 		textField_9.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
-		textField_9.setColumns(10);
 		textField_9.setBounds(694, 406, 48, 20);
 		contentPane.add(textField_9);
 		JButton btnCreate = new JButton("Create");
@@ -311,42 +307,71 @@ public class NewPharmacy extends JFrame {
 		btnCreate.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				
-				UserNameConverter uConverter = new UserNameConverter();
-				
-				String name = nameText.getText();
-				String username = uConverter.Converter(nameText.getText());
-				
-				DatabaseController.newPharmacy(
-						nameText.getText(), 
-						addressText.getText(),
-						emailText.getText(), 
-						username,
-						passwordField.getText(), 
-						DistrictComboBox.getSelectedItem().toString(), 
-						phoneText.getText());
-				
-				
-				
-				DatabaseController.newPharmacyStock(username, 1 ,Integer.parseInt(textField_0.getText()));
-				DatabaseController.newPharmacyStock(username, 2 ,Integer.parseInt(textField.getText()));
-				DatabaseController.newPharmacyStock(username, 3 ,Integer.parseInt(textField_2.getText()));
-				DatabaseController.newPharmacyStock(username, 4 ,Integer.parseInt(textField_3.getText()));
-				DatabaseController.newPharmacyStock(username, 5 ,Integer.parseInt(textField_4.getText()));
-				DatabaseController.newPharmacyStock(username, 6 ,Integer.parseInt(textField_5.getText()));
-				DatabaseController.newPharmacyStock(username, 7 ,Integer.parseInt(textField_6.getText()));
-				DatabaseController.newPharmacyStock(username, 8 ,Integer.parseInt(textField_7.getText()));
-				DatabaseController.newPharmacyStock(username, 9 ,Integer.parseInt(textField_8.getText()));
-				DatabaseController.newPharmacyStock(username, 10 ,Integer.parseInt(textField_9.getText()));
-				adminMainPage.refreshTable();
-				setVisible(false);
+			
+				if (nameText.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should enter your name...");
+				} else if (passwordField.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "You should enter your password...");
+				}
+				else {
+
+					UserNameConverter uConverter = new UserNameConverter();
+
+					String username = uConverter.Converter(nameText.getText());
+
+					DatabaseController.newPharmacy(nameText.getText(), addressText.getText(), emailText.getText(),
+							username, passwordField.getText(), DistrictComboBox.getSelectedItem().toString(),
+							phoneText.getText());
+
+					int value1 = (int) textField_0.getValue();
+					{
+						DatabaseController.newPharmacyStock(username, 1, value1);
+					}
+					int value2 = (int) textField.getValue();
+					{
+						DatabaseController.newPharmacyStock(username, 2, value2);
+					}
+
+					int value3 = (int) textField_2.getValue();
+					{
+						DatabaseController.newPharmacyStock(username, 3, value3);
+					}
+					int value4 = (int) textField_3.getValue();
+					{
+						DatabaseController.newPharmacyStock(username, 4, value4);
+					}
+					int value5 = (int) textField_4.getValue();
+					{
+						DatabaseController.newPharmacyStock(username, 5, value5);
+					}
+					int value6 = (int) textField_5.getValue();
+					{
+						DatabaseController.newPharmacyStock(username, 6, value6);
+					}
+					int value7 = (int) textField_6.getValue();
+					{
+						DatabaseController.newPharmacyStock(username, 7, value7);
+					}
+					int value8 = (int) textField_7.getValue();
+					{
+						DatabaseController.newPharmacyStock(username, 8, value8);
+					}
+					int value9 = (int) textField_8.getValue();
+					{
+						DatabaseController.newPharmacyStock(username, 9, value9);
+					}
+					int value10 = (int) textField_9.getValue();
+					{
+						DatabaseController.newPharmacyStock(username, 10, value10);
+					}
+
+					adminMainPage.refreshTable();
+					setVisible(false);
+				}
 			}
 		});
 		
-		textField = new JTextField();
-		textField.setBounds(694, 86, 48, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+
 	
 		btnCreate.setBounds(495, 455, 89, 23);
 		contentPane.add(btnCreate);

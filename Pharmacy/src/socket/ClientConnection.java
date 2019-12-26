@@ -1,6 +1,7 @@
 package socket;
 
 import java.io.IOException;
+import ui.SellDrugPage;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -90,6 +91,22 @@ public class ClientConnection {
 		}
 
 		return drugStocks;
+	}
+
+	public static void sendSoldDrug(int id,int value,String username) {
+		try (Socket socket = new Socket("127.0.0.1", 35000)) {
+			SellDrugPage sellDrugPage=null;
+			ClientController.sendMessage("DECREASESTOCK", socket);
+			ClientController.sendMessage(username, socket);
+			SoldDrug soldDrug=new SoldDrug(id,value,username);
+			ClientController.sendData(soldDrug, socket);
+			
+		
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 }

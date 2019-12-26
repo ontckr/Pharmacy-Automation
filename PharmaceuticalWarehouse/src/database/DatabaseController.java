@@ -249,7 +249,6 @@ public class DatabaseController {
 			pStatement.close();
 		} catch (Exception exception) {
 			JOptionPane.showMessageDialog(null, exception);
-			System.out.println("7");
 		}
 
 		return userList;

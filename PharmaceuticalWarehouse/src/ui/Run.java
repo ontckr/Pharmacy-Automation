@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import model.SoldDrug;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -105,8 +106,23 @@ public class Run {
 					ServerController.sendData(drugStocks, socket);
 					
 				}
+				else if(message.contentEquals("DECREASESTOCK")) {
+					String username = ServerController.receiveMessage(socket);
+					SoldDrug soldDrug=(SoldDrug) ServerController.receiveData(socket);
+					int id=soldDrug.getID();
+					int value=soldDrug.getValue();
+					String username1=soldDrug.getUsername();
+					DatabaseController.decreaseStock(id, value, username1);
+					System.out.println("Db username geldi: "+username1);
+					System.out.println("Db username geldi: "+id);
+					System.out.println("Db username geldi: "+value);
+					
+				}
+
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+				e.printStackTrace();
             }
         }
     }

@@ -237,6 +237,30 @@ public class AdminMainPage extends JFrame {
 		contentPane.add(btnSend);
 		
 		JButton btnSupply = new JButton("Supply");
+		btnSupply.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SupplyStockPage supplyStockPage=null;
+				
+				int selectedRow = table.getSelectedRow();
+				int id = (int) table.getValueAt(selectedRow, 0);				
+				
+				
+				int selectedIndex = table.getSelectedRow();
+				
+				System.out.println("Selected index"+selectedIndex);
+				
+				if (selectedIndex < 0) {
+					JOptionPane.showMessageDialog(null, "Select a pharmacy to supply.");
+				}else {
+					Pharmacy selectedUser = DatabaseController.getUser(id);
+					System.out.println(selectedIndex);
+					System.out.println("Selected user: "+ selectedUser.getName());
+				
+					supplyStockPage = new SupplyStockPage(adminMainPage,selectedUser);
+					supplyStockPage.setVisible(true);
+				}
+			}
+		});
 		btnSupply.setFont(new Font("Dialog", Font.BOLD, 15));
 		btnSupply.setBounds(384, 468, 117, 34);
 		contentPane.add(btnSupply);

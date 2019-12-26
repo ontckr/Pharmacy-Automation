@@ -412,7 +412,8 @@ public class UserMainPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				new SellPage(username);
+				SellPage sellpage=new SellPage(username);
+				sellpage.setVisible(true);
 
 			}
 
