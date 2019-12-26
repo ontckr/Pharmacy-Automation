@@ -1,0 +1,428 @@
+package ui;
+
+import java.util.ArrayList;
+import socket.*;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import javax.swing.JLabel;
+
+import javax.swing.SwingConstants;
+import javax.swing.JTextPane;
+import javax.swing.JToolBar;
+import java.awt.Canvas;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.UIManager;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Label;
+import java.awt.List;
+
+import javax.swing.JSeparator;
+import javax.swing.JDesktopPane;
+import javax.swing.JTable;
+import javax.swing.JTabbedPane;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.title.LegendTitle;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.ui.ApplicationFrame;
+import org.jfree.ui.RefineryUtilities;
+
+import com.sun.jdi.connect.spi.Connection;
+
+import chat.Client;
+
+import javax.swing.JButton;
+import model.*;
+import socket.ClientController;
+import javax.swing.JTextField;
+public class UserMainPage extends JFrame {
+
+	private JPanel contentPane;
+
+	private String username;
+	private String name;
+	private String address;
+	private String email;
+	private String district;
+	private String phone;
+	private int id;
+	private ChartPanel chartPanel;
+
+	public UserMainPage(int id, String username, String name, String address, String email, String district,
+			String phone) {
+		this.id = id;
+		this.username = username;
+		this.name = name;
+		this.address = address;
+		this.email = email;
+		this.district = district;
+		this.phone = phone;
+		
+		ArrayList<DrugStock> drugs = ClientConnection.getPharmacyDrugs(username);
+		
+
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 800, 706);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JLabel emailLabel = new JLabel("New label");
+		emailLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		emailLabel.setBounds(320, 35, 130, 30);
+		contentPane.add(emailLabel);
+		emailLabel.setText(email);
+
+		JLabel lblAdress = new JLabel("Address: ");
+		lblAdress.setFont(new Font("Century Gothic", Font.BOLD, 16));
+		lblAdress.setBounds(470, 40, 80, 14);
+		contentPane.add(lblAdress);
+		
+
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(230, 230, 250));
+		panel.setBounds(20, 10, 758, 125);
+		contentPane.add(panel);
+		panel.setLayout(null);
+
+		JLabel addressLabel = new JLabel("New label");
+		addressLabel.setBounds(544, 25, 130, 28);
+		panel.add(addressLabel);
+		addressLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		addressLabel.setText(address);
+						
+		JLabel lblName = new JLabel("Name: ");
+		lblName.setBounds(17, 32, 60, 14);
+		panel.add(lblName);
+		lblName.setFont(new Font("Century Gothic", Font.BOLD, 16));
+		
+		JLabel lblPhone = new JLabel("Phone: ");
+		lblPhone.setBounds(17, 73, 60, 14);
+		panel.add(lblPhone);
+		lblPhone.setFont(new Font("Century Gothic", Font.BOLD, 16));
+		
+		JLabel nameLabel = new JLabel("New label");
+		nameLabel.setBounds(77, 25, 130, 28);
+		panel.add(nameLabel);
+		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		nameLabel.setText(name);
+		
+		JLabel phoneLabel = new JLabel("New label");
+		phoneLabel.setBounds(77, 66, 130, 28);
+		panel.add(phoneLabel);
+		phoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		phoneLabel.setText(phone);
+		
+		JLabel districtLabel = new JLabel("New label");
+		districtLabel.setBounds(301, 65, 130, 30);
+		panel.add(districtLabel);
+		districtLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		districtLabel.setText(district);
+		
+		JLabel lblDistrict = new JLabel("District: ");
+		lblDistrict.setBounds(229, 73, 100, 14);
+		panel.add(lblDistrict);
+		lblDistrict.setFont(new Font("Century Gothic", Font.BOLD, 16));
+		
+		JLabel lblEmail = new JLabel("Email: ");
+		lblEmail.setBounds(229, 32, 80, 14);
+		panel.add(lblEmail);
+		lblEmail.setFont(new Font("Century Gothic", Font.BOLD, 16));
+
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 140, 768, 2);
+		contentPane.add(separator);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(10, 220, 768, 443);
+		contentPane.add(tabbedPane);
+		
+		JPanel panel_1 = new JPanel();
+		tabbedPane.addTab("Stock", null, panel_1, null);
+		panel_1.setBackground(new Color(255, 255, 240));
+		panel_1.setLayout(null);
+
+		
+		JLabel lblTalcidMg = new JLabel(drugs.get(0).getName());
+		lblTalcidMg.setBounds(6, 70, 140, 20);
+		panel_1.add(lblTalcidMg);
+		lblTalcidMg.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		JLabel lblUltravistFlakon = new JLabel(drugs.get(1).getName());
+		lblUltravistFlakon.setBounds(6, 120, 140, 20);
+		panel_1.add(lblUltravistFlakon);
+		lblUltravistFlakon.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		JLabel lblVisanneTablet = new JLabel(drugs.get(2).getName());
+		lblVisanneTablet.setBounds(6, 170, 140, 20);
+		panel_1.add(lblVisanneTablet);
+		lblVisanneTablet.setBackground(SystemColor.inactiveCaption);
+		lblVisanneTablet.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		JLabel lblMinoset = new JLabel(drugs.get(3).getName());
+		lblMinoset.setBounds(6, 220, 140, 20);
+		panel_1.add(lblMinoset);
+		lblMinoset.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		JLabel lblAspirin = new JLabel(drugs.get(4).getName());
+		lblAspirin.setBounds(6, 270, 140, 20);
+		panel_1.add(lblAspirin);
+		lblAspirin.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		JLabel lblBaclan = new JLabel(drugs.get(5).getName());
+		lblBaclan.setBounds(360, 70, 160, 20);
+		panel_1.add(lblBaclan);
+		lblBaclan.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		JLabel lblCiproxin = new JLabel(drugs.get(6).getName());
+		lblCiproxin.setBounds(360, 120, 160, 20);
+		panel_1.add(lblCiproxin);
+		lblCiproxin.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		JLabel lblGlucobay = new JLabel(drugs.get(7).getName());
+		lblGlucobay.setBounds(360, 170, 160, 20);
+		panel_1.add(lblGlucobay);
+		lblGlucobay.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		JLabel lblLuminal = new JLabel(drugs.get(8).getName());
+		lblLuminal.setBounds(360, 220, 160, 20);
+		panel_1.add(lblLuminal);
+		lblLuminal.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		JLabel lblXofigo = new JLabel(drugs.get(9).getName());
+		lblXofigo.setBounds(360, 270, 160, 20);
+		panel_1.add(lblXofigo);
+		lblXofigo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		JLabel lblBoxSize = new JLabel("Box Size");
+		lblBoxSize.setBounds(140, 20, 74, 30);
+		panel_1.add(lblBoxSize);
+		lblBoxSize.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 16));
+		lblBoxSize.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 16));
+
+		JLabel label = new JLabel("10");
+		label.setBounds(155, 70, 48, 14);
+		panel_1.add(label);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label_1 = new JLabel("12");
+		label_1.setBounds(155, 120, 48, 14);
+		panel_1.add(label_1);
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label_2 = new JLabel("15");
+		label_2.setBounds(155, 170, 48, 14);
+		panel_1.add(label_2);
+		label_2.setHorizontalAlignment(SwingConstants.CENTER);
+		label_2.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label_3 = new JLabel("8");
+		label_3.setBounds(155, 220, 48, 14);
+		panel_1.add(label_3);
+		label_3.setHorizontalAlignment(SwingConstants.CENTER);
+		label_3.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label_4 = new JLabel("11");
+		label_4.setBounds(155, 270, 48, 14);
+		panel_1.add(label_4);
+		label_4.setHorizontalAlignment(SwingConstants.CENTER);
+		label_4.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label_5 = new JLabel("12");
+		label_5.setBounds(545, 70, 48, 14);
+		panel_1.add(label_5);
+		label_5.setHorizontalAlignment(SwingConstants.CENTER);
+		label_5.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label_6 = new JLabel("13");
+		label_6.setBounds(545, 120, 48, 14);
+		panel_1.add(label_6);
+		label_6.setHorizontalAlignment(SwingConstants.CENTER);
+		label_6.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label_7 = new JLabel("14");
+		label_7.setBounds(545, 170, 48, 14);
+		panel_1.add(label_7);
+		label_7.setHorizontalAlignment(SwingConstants.CENTER);
+		label_7.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label_8 = new JLabel("15");
+		label_8.setBounds(545, 220, 48, 14);
+		panel_1.add(label_8);
+		label_8.setHorizontalAlignment(SwingConstants.CENTER);
+		label_8.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label_9 = new JLabel("16");
+		label_9.setBounds(545, 270, 48, 14);
+		panel_1.add(label_9);
+		label_9.setHorizontalAlignment(SwingConstants.CENTER);
+		label_9.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel lblStock = new JLabel("Stock");
+		lblStock.setBounds(250, 20, 74, 30);
+		panel_1.add(lblStock);
+		lblStock.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 16));
+
+		JLabel label1 = new JLabel();
+		label1.setBounds(250, 70, 48, 14);
+		panel_1.add(label1);
+		label1.setHorizontalAlignment(SwingConstants.CENTER);
+		label1.setText(String.valueOf(drugs.get(0).getStock()));
+		label1.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label2 = new JLabel();
+		label2.setBounds(250, 120, 48, 14);
+		panel_1.add(label2);
+		label2.setHorizontalAlignment(SwingConstants.CENTER);
+		label2.setText(String.valueOf(drugs.get(1).getStock()));
+		label2.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label3 = new JLabel();
+		label3.setBounds(250, 170, 48, 14);
+		panel_1.add(label3);
+		label3.setHorizontalAlignment(SwingConstants.CENTER);
+		label3.setText(String.valueOf(drugs.get(2).getStock()));
+		label3.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label4 = new JLabel();
+		label4.setBounds(250, 220, 48, 14);
+		panel_1.add(label4);
+		label4.setHorizontalAlignment(SwingConstants.CENTER);
+		label4.setText(String.valueOf(drugs.get(3).getStock()));
+		label4.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label5 = new JLabel(String.valueOf(drugs.get(4).getStock()));
+		label5.setBounds(250, 270, 48, 14);
+		panel_1.add(label5);
+		label5.setHorizontalAlignment(SwingConstants.CENTER);
+		label5.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label6 = new JLabel(String.valueOf(drugs.get(5).getStock()));
+		label6.setBounds(640, 70, 48, 14);
+		panel_1.add(label6);
+		label6.setHorizontalAlignment(SwingConstants.CENTER);
+		label6.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label7 = new JLabel(String.valueOf(drugs.get(6).getStock()));
+		label7.setBounds(640, 120, 48, 14);
+		panel_1.add(label7);
+		label7.setHorizontalAlignment(SwingConstants.CENTER);
+		label7.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label8 = new JLabel(String.valueOf(drugs.get(7).getStock()));
+		label8.setBounds(640, 170, 48, 14);
+		panel_1.add(label8);
+		label8.setHorizontalAlignment(SwingConstants.CENTER);
+		label8.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label9 = new JLabel(String.valueOf(drugs.get(8).getStock()));
+		label9.setBounds(640, 220, 48, 14);
+		panel_1.add(label9);
+		label9.setHorizontalAlignment(SwingConstants.CENTER);
+		label9.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel label10 = new JLabel(String.valueOf(drugs.get(9).getStock()));
+		label10.setBounds(640, 270, 48, 14);
+		panel_1.add(label10);
+		label10.setHorizontalAlignment(SwingConstants.CENTER);
+		label10.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+		JLabel BoxSize1 = new JLabel("Box Size");
+		BoxSize1.setBounds(530, 20, 74, 30);
+		panel_1.add(BoxSize1);
+		BoxSize1.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 16));
+
+		JLabel Stock1 = new JLabel("Stock");
+		Stock1.setBounds(640, 20, 74, 30);
+		panel_1.add(Stock1);
+		Stock1.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 16));
+		
+		
+
+
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(10, 526, 768, 2);
+		contentPane.add(separator_1);
+
+		var dataset = new DefaultCategoryDataset();
+		dataset.setValue(drugs.get(0).getStock(), drugs.get(0).getName(), "");
+		dataset.setValue(drugs.get(1).getStock(), drugs.get(1).getName(), "");
+		dataset.setValue(drugs.get(2).getStock(), drugs.get(2).getName(), "");
+		dataset.setValue(drugs.get(3).getStock(), drugs.get(3).getName(), "");
+		dataset.setValue(drugs.get(4).getStock(), drugs.get(4).getName(), "");
+		dataset.setValue(drugs.get(5).getStock(), drugs.get(5).getName(), "");
+		dataset.setValue(drugs.get(6).getStock(), drugs.get(6).getName(), "");
+		dataset.setValue(drugs.get(7).getStock(), drugs.get(7).getName(), "");
+		dataset.setValue(drugs.get(8).getStock(), drugs.get(8).getName(), "");
+		dataset.setValue(drugs.get(9).getStock(), drugs.get(9).getName(), "");
+
+		JFreeChart chart = ChartFactory.createBarChart("Stock", "", "Stock", dataset, PlotOrientation.VERTICAL, true, false, false);
+		chart.setBackgroundPaint(Color.pink);
+		final CategoryPlot plot = chart.getCategoryPlot();
+		final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+		rangeAxis.setTickLabelFont(new Font("Calibri", Font.BOLD, 12));
+		CategoryAxis domainAxis = plot.getDomainAxis();
+		domainAxis.setCategoryLabelPositions(CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 6.0));
+
+		Font labelFont = new Font("Calibri", Font.PLAIN, 13);
+		LegendTitle legend = chart.getLegend();
+		legend.setItemFont(labelFont);
+		chartPanel = new ChartPanel(chart);
+		tabbedPane.addTab("Chart", null, chartPanel, null);
+		
+				JButton sellButton = new JButton("Sell Drugs");
+				sellButton.setBounds(103, 147, 140, 37);
+				contentPane.add(sellButton);
+				sellButton.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+				
+				JButton chatButton = new JButton("Chat");
+				chatButton.setFont(new Font("Dialog", Font.BOLD, 15));
+				chatButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new Client(username);
+					}
+				});
+				chatButton.setBounds(538, 147, 140, 37);
+				contentPane.add(chatButton);
+				
+				JButton refreshButton = new JButton("Refresh");
+				refreshButton.setFont(new Font("Dialog", Font.BOLD, 15));
+				refreshButton.setBounds(321, 147, 140, 37);
+				contentPane.add(refreshButton);
+				
+				sellButton.addActionListener(new ActionListener() {
+					
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						new SellPage(username);
+						
+					}
+					
+				});
+
+	}
+}
+

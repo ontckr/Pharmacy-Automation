@@ -1,0 +1,208 @@
+package chat;
+
+import javax.swing.*;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import model.User;
+
+public class Server extends JFrame {
+
+    private int port = 12345;
+    private List<User> clients;
+    private ServerSocket server;
+    private static JFrame f;
+    private static JList list;
+    private static DefaultListModel listModel;
+
+    public static JTextPane jtextFilDiscu = new JTextPane();
+    private static JTextField jtextInputChat = new JTextField();
+
+    public static void main(String[] args) throws IOException {
+       
+    	listModel = new DefaultListModel();
+
+
+        f = new JFrame("frame");
+        JPanel p = new JPanel();
+        list = new JList(listModel);
+        p.add(list);
+        p.setBounds(700,25,100,400);
+
+        String fontfamily = "Arial, sans-serif";
+        Font font = new Font(fontfamily, Font.PLAIN, 15);
+
+        jtextFilDiscu.setBounds(25, 25, 490, 320);
+        jtextFilDiscu.setFont(font);
+        jtextFilDiscu.setMargin(new Insets(6, 6, 6, 6));
+        jtextFilDiscu.setEditable(false);
+        JScrollPane jtextFilDiscuSP = new JScrollPane(jtextFilDiscu);
+        jtextFilDiscuSP.setBounds(25, 25, 490, 320);
+
+        jtextFilDiscu.setContentType("text/html");
+        jtextFilDiscu.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true);
+
+
+        jtextInputChat.setBounds(0, 350, 400, 50);
+        jtextInputChat.setFont(font);
+        jtextInputChat.setMargin(new Insets(6, 6, 6, 6));
+        final JScrollPane jtextInputChatSP = new JScrollPane(jtextInputChat);
+        jtextInputChatSP.setBounds(25, 350, 650, 50);
+
+        // button send
+        final JButton jsbtn = new JButton("Send");
+        jsbtn.setFont(font);
+        jsbtn.setBounds(575, 410, 100, 35);
+
+
+
+        f.add(jtextFilDiscuSP);
+        f.add(jtextInputChatSP);
+        f.add(jsbtn);
+
+
+        f.add(p);
+        f.setSize(400, 400);
+        f.setVisible(true);
+
+        Server server = new Server();
+
+        jtextInputChat.addKeyListener(new KeyAdapter() {
+            // send message on Enter
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if (list.getSelectedValue() != null) {
+                        String message = jtextInputChat.getText().trim();
+                        if (message.equals("")) {
+                            return;
+                        }
+                        server.sendMessageToUser(
+                                message, list.getSelectedValue().toString(), true
+                        );
+                        clearAndAddToPane();
+                    }
+                }
+
+            }
+        });
+
+        // Click on send button
+        jsbtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                if (list.getSelectedValue() != null) {
+                    String message = jtextInputChat.getText().trim();
+                    if (message.equals("")) {
+                        return;
+                    }
+                    server.sendMessageToUser(
+                            message, list.getSelectedValue().toString(), true
+                    );
+                    clearAndAddToPane();
+
+                }
+            }
+        });
+
+        server.run();
+    }
+
+    public static void clearAndAddToPane() {
+        try {
+            String message = jtextInputChat.getText().trim();
+            if (message.equals("")) {
+                return;
+            }
+
+            appendToPane(jtextFilDiscu, " ADMIN: " + message);
+            jtextInputChat.requestFocus();
+            jtextInputChat.setText(null);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+            System.exit(0);
+        }
+    }
+
+    public static void appendToPane(JTextPane tp, String msg) {
+        HTMLDocument doc = (HTMLDocument) tp.getDocument();
+        HTMLEditorKit editorKit = (HTMLEditorKit) tp.getEditorKit();
+        try {
+            editorKit.insertHTML(doc, doc.getLength(), msg, 0, 0, null);
+            tp.setCaretPosition(doc.getLength());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Server() {
+        this.clients = new ArrayList<>();
+    }
+
+    public void run() throws IOException {
+        server = new ServerSocket(port) {
+            protected void finalize() throws IOException {
+                this.close();
+            }
+        };
+        System.out.println("Port 12345 is now open.");
+
+        while (true) {
+            // accepts a new client
+            Socket client = server.accept();
+
+            // get nickname of newUser
+            String nickname = (new Scanner(client.getInputStream())).nextLine();
+            nickname = nickname.replace(",", ""); //  ',' use for serialisation
+            nickname = nickname.replace(" ", "_");
+            System.out.println("New Client: \"" + nickname + "\"\n\t     Host:" + client.getInetAddress().getHostAddress());
+
+            // create new User
+            User newUser = new User(client, nickname);
+
+            // add newUser message to list
+            this.clients.add(newUser);
+            listModel.removeAllElements();
+            this.clients.forEach((User u) -> {
+                listModel.addElement(u.getNickname());
+            });
+            // create a new thread for newUser incoming messages handling
+            new Thread(new UserHandler(this, newUser)).start();
+        }
+    }
+
+    // delete a user from the list
+    public void removeUser(User user) {
+        this.clients.remove(user);
+        listModel.removeAllElements();
+        this.clients.forEach((User u) -> {
+            listModel.addElement(u.getNickname());
+        });
+    }
+
+
+    // send message to a User (String)
+    public void sendMessageToUser(String msg, String user, boolean isAdmin) {
+        for (User client : this.clients) {
+            if (client.getNickname().equals(user)) {
+                if (isAdmin) {
+                    client.getOutStream().println(
+                            "Pharmaceutical Wharehouse" + "<span>: " + msg + "</span>");
+                } else {
+                    client.getOutStream().println(
+                            user + "<span>: " + msg + "</span>");
+                }
+
+            }
+        }
+
+    }
+}

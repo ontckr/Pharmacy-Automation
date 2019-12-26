@@ -39,6 +39,7 @@
 		<item key="updateTextualMatches" value="false"/>
 		<item key="updateQualifiedNames" value="false"/>
 		<item key="patterns" value="*"/>
+		<item key="renameSubpackages" value="false"/>
 	</section>
 	<section name="BuildPathsPropertyPage">
 		<item key="pageIndex" value="2"/>
@@ -50,5 +51,10 @@
 		<item key="SearchInAppLibs" value="true"/>
 	</section>
 	<section name="CallHierarchySearchScope">
+	</section>
+	<section name="NewPackageWizardPage">
+		<item key="create_package_info_java" value="false"/>
+	</section>
+	<section name="BreadcrumbItemDropDown">
 	</section>
 </section>

@@ -46,26 +46,25 @@ import org.jfree.ui.RefineryUtilities;
 
 import com.sun.jdi.connect.spi.Connection;
 
+import chat.Client;
+
 import javax.swing.JButton;
 import model.*;
 import socket.ClientController;
 import javax.swing.JTextField;
+
 public class UserMainPage extends JFrame {
 
 	private JPanel contentPane;
 
 	private String username;
-
-
 	private String name;
 	private String address;
 	private String email;
-
 	private String district;
 	private String phone;
 	private int id;
 	private ChartPanel chartPanel;
-	private JTextField textField;
 
 	public UserMainPage(int id, String username, String name, String address, String email, String district,
 			String phone) {
@@ -76,12 +75,11 @@ public class UserMainPage extends JFrame {
 		this.email = email;
 		this.district = district;
 		this.phone = phone;
-		
+
 		ArrayList<DrugStock> drugs = ClientConnection.getPharmacyDrugs(username);
-		
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 800, 631);
+		setBounds(100, 100, 800, 706);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -97,114 +95,94 @@ public class UserMainPage extends JFrame {
 		lblAdress.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		lblAdress.setBounds(470, 40, 80, 14);
 		contentPane.add(lblAdress);
-		
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(230, 230, 250));
 		panel.setBounds(20, 10, 758, 125);
 		contentPane.add(panel);
-				panel.setLayout(null);
-		
-				JLabel addressLabel = new JLabel("New label");
-				addressLabel.setBounds(544, 25, 130, 28);
-				panel.add(addressLabel);
-				addressLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-				
-						addressLabel.setText(address);
-						
-								JButton sellButton = new JButton("Sell Drugs");
-								sellButton.setBounds(566, 70, 140, 37);
-								panel.add(sellButton);
-								sellButton.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
-								
-										JLabel lblName = new JLabel("Name: ");
-										lblName.setBounds(17, 32, 60, 14);
-										panel.add(lblName);
-										lblName.setFont(new Font("Century Gothic", Font.BOLD, 16));
-										
-												JLabel lblPhone = new JLabel("Phone: ");
-												lblPhone.setBounds(17, 73, 60, 14);
-												panel.add(lblPhone);
-												lblPhone.setFont(new Font("Century Gothic", Font.BOLD, 16));
-												
-														JLabel nameLabel = new JLabel("New label");
-														nameLabel.setBounds(77, 25, 130, 28);
-														panel.add(nameLabel);
-														nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-														nameLabel.setText(name);
-														
-																JLabel phoneLabel = new JLabel("New label");
-																phoneLabel.setBounds(77, 66, 130, 28);
-																panel.add(phoneLabel);
-																phoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-																phoneLabel.setText(phone);
-																
-																		JLabel districtLabel = new JLabel("New label");
-																		districtLabel.setBounds(301, 65, 130, 30);
-																		panel.add(districtLabel);
-																		districtLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-																		districtLabel.setText(district);
-																		
-																				JLabel lblDistrict = new JLabel("District: ");
-																				lblDistrict.setBounds(229, 73, 100, 14);
-																				panel.add(lblDistrict);
-																				lblDistrict.setFont(new Font("Century Gothic", Font.BOLD, 16));
-																				
-																						JLabel lblEmail = new JLabel("Email: ");
-																						lblEmail.setBounds(229, 32, 80, 14);
-																						panel.add(lblEmail);
-																						lblEmail.setFont(new Font("Century Gothic", Font.BOLD, 16));
-								
-								sellButton.addActionListener(new ActionListener() {
-									
-									
-									@Override
-									public void actionPerformed(ActionEvent e) {
-										
-										new SellPage(username);
-										
-									}
-									
-								});
+		panel.setLayout(null);
+
+		JLabel addressLabel = new JLabel("New label");
+		addressLabel.setBounds(544, 25, 130, 28);
+		panel.add(addressLabel);
+		addressLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+		addressLabel.setText(address);
+
+		JLabel lblName = new JLabel("Name: ");
+		lblName.setBounds(17, 32, 60, 14);
+		panel.add(lblName);
+		lblName.setFont(new Font("Century Gothic", Font.BOLD, 16));
+
+		JLabel lblPhone = new JLabel("Phone: ");
+		lblPhone.setBounds(17, 73, 60, 14);
+		panel.add(lblPhone);
+		lblPhone.setFont(new Font("Century Gothic", Font.BOLD, 16));
+
+		JLabel nameLabel = new JLabel("New label");
+		nameLabel.setBounds(77, 25, 130, 28);
+		panel.add(nameLabel);
+		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		nameLabel.setText(name);
+
+		JLabel phoneLabel = new JLabel("New label");
+		phoneLabel.setBounds(77, 66, 130, 28);
+		panel.add(phoneLabel);
+		phoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		phoneLabel.setText(phone);
+
+		JLabel districtLabel = new JLabel("New label");
+		districtLabel.setBounds(301, 65, 130, 30);
+		panel.add(districtLabel);
+		districtLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		districtLabel.setText(district);
+
+		JLabel lblDistrict = new JLabel("District: ");
+		lblDistrict.setBounds(229, 73, 100, 14);
+		panel.add(lblDistrict);
+		lblDistrict.setFont(new Font("Century Gothic", Font.BOLD, 16));
+
+		JLabel lblEmail = new JLabel("Email: ");
+		lblEmail.setBounds(229, 32, 80, 14);
+		panel.add(lblEmail);
+		lblEmail.setFont(new Font("Century Gothic", Font.BOLD, 16));
 
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 140, 768, 2);
 		contentPane.add(separator);
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 147, 768, 443);
+		tabbedPane.setBounds(10, 220, 768, 443);
 		contentPane.add(tabbedPane);
-		
+
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Stock", null, panel_1, null);
 		panel_1.setBackground(new Color(255, 255, 240));
 		panel_1.setLayout(null);
 
-		// getData();
-
 		JLabel lblTalcidMg = new JLabel(drugs.get(0).getName());
-		lblTalcidMg.setBounds(0, 70, 140, 20);
+		lblTalcidMg.setBounds(6, 70, 140, 20);
 		panel_1.add(lblTalcidMg);
 		lblTalcidMg.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		JLabel lblUltravistFlakon = new JLabel(drugs.get(1).getName());
-		lblUltravistFlakon.setBounds(0, 120, 140, 20);
+		lblUltravistFlakon.setBounds(6, 120, 140, 20);
 		panel_1.add(lblUltravistFlakon);
 		lblUltravistFlakon.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		JLabel lblVisanneTablet = new JLabel(drugs.get(2).getName());
-		lblVisanneTablet.setBounds(0, 170, 140, 20);
+		lblVisanneTablet.setBounds(6, 170, 140, 20);
 		panel_1.add(lblVisanneTablet);
 		lblVisanneTablet.setBackground(SystemColor.inactiveCaption);
 		lblVisanneTablet.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		JLabel lblMinoset = new JLabel(drugs.get(3).getName());
-		lblMinoset.setBounds(0, 220, 140, 20);
+		lblMinoset.setBounds(6, 220, 140, 20);
 		panel_1.add(lblMinoset);
 		lblMinoset.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		JLabel lblAspirin = new JLabel(drugs.get(4).getName());
-		lblAspirin.setBounds(0, 270, 140, 20);
+		lblAspirin.setBounds(6, 270, 140, 20);
 		panel_1.add(lblAspirin);
 		lblAspirin.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
@@ -377,9 +355,6 @@ public class UserMainPage extends JFrame {
 		Stock1.setBounds(640, 20, 74, 30);
 		panel_1.add(Stock1);
 		Stock1.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 16));
-		
-		
-
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(10, 526, 768, 2);
@@ -397,7 +372,8 @@ public class UserMainPage extends JFrame {
 		dataset.setValue(drugs.get(8).getStock(), drugs.get(8).getName(), "");
 		dataset.setValue(drugs.get(9).getStock(), drugs.get(9).getName(), "");
 
-		JFreeChart chart = ChartFactory.createBarChart("Stock", "", "Stock", dataset, PlotOrientation.VERTICAL, true, false, false);
+		JFreeChart chart = ChartFactory.createBarChart("Stock", "", "Stock", dataset, PlotOrientation.VERTICAL, true,
+				false, false);
 		chart.setBackgroundPaint(Color.pink);
 		final CategoryPlot plot = chart.getCategoryPlot();
 		final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
@@ -410,24 +386,37 @@ public class UserMainPage extends JFrame {
 		legend.setItemFont(labelFont);
 		chartPanel = new ChartPanel(chart);
 		tabbedPane.addTab("Chart", null, chartPanel, null);
-		
-		JPanel panel_2 = new JPanel();
-		tabbedPane.addTab("New tab", null, panel_2, null);
-		panel_2.setLayout(null);
-		
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(47, 19, 660, 317);
-		panel_2.add(textPane);
-		
-		textField = new JTextField();
-		textField.setBounds(43, 348, 527, 29);
-		panel_2.add(textField);
-		textField.setColumns(10);
-		
-		JButton btnSend = new JButton("Send");
-		btnSend.setBounds(582, 349, 125, 29);
-		panel_2.add(btnSend);
+
+		JButton sellButton = new JButton("Sell Drugs");
+		sellButton.setBounds(103, 147, 140, 37);
+		contentPane.add(sellButton);
+		sellButton.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
+
+		JButton chatButton = new JButton("Chat");
+		chatButton.setFont(new Font("Dialog", Font.BOLD, 15));
+		chatButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Client(username);
+			}
+		});
+		chatButton.setBounds(538, 147, 140, 37);
+		contentPane.add(chatButton);
+
+		JButton refreshButton = new JButton("Refresh");
+		refreshButton.setFont(new Font("Dialog", Font.BOLD, 15));
+		refreshButton.setBounds(321, 147, 140, 37);
+		contentPane.add(refreshButton);
+
+		sellButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				new SellPage(username);
+
+			}
+
+		});
 
 	}
 }
-

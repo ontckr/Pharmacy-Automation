@@ -14,12 +14,16 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
 
+import chat.Server;
 import database.DatabaseController;
 import model.Pharmacy;
 
@@ -42,23 +46,28 @@ public class AdminMainPage extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private AdminMainPage adminMainPage;
-	private JTextField textField;
-
+	private JTextField messageTextfield;
+    private DefaultListModel<String> listModel;
+    private JTextPane textPane;
+    
 	public AdminMainPage() throws IOException {
+        listModel = new DefaultListModel<String>();
+
+       
 		adminMainPage= this;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 934, 551);
+		setBounds(100, 100, 1075, 551);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblAdmin = new JLabel("Pharmaceutical Warehouse");
-		lblAdmin.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblAdmin.setBounds(20, 25, 194, 30);
+		lblAdmin.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblAdmin.setBounds(20, 25, 274, 30);
 		contentPane.add(lblAdmin);
 		
 		JButton btnNewPharmacy = new JButton("New Pharmacy");
-		btnNewPharmacy.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnNewPharmacy.setFont(new Font("Dialog", Font.BOLD, 15));
 		btnNewPharmacy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NewPharmacy newPharmacyPage = null;
@@ -72,13 +81,15 @@ public class AdminMainPage extends JFrame {
 				newPharmacyPage.setVisible(true);
 			}
 		});
-		btnNewPharmacy.setBounds(250, 25, 160, 30);
+		btnNewPharmacy.setBounds(341, 24, 160, 34);
 		contentPane.add(btnNewPharmacy);
 		
-		JTextPane txtpnAsdasd = new JTextPane();
-		txtpnAsdasd.setBackground(Color.WHITE);
-		txtpnAsdasd.setBounds(443, 31, 339, 421);
-		contentPane.add(txtpnAsdasd);
+		textPane = new JTextPane();
+		textPane.setFont(new Font("Arial", Font.PLAIN, 15));
+		textPane.setEditable(false);
+		textPane.setBackground(Color.WHITE);
+		textPane.setBounds(529, 25, 325, 431);
+		contentPane.add(textPane);
 
 		
 		table = new JTable(new DefaultTableModel(
@@ -88,11 +99,10 @@ public class AdminMainPage extends JFrame {
 				"ID", "Name", "District", "Phone"
 			}
 		));
-		table.setForeground(Color.RED);
+		table.setForeground(Color.BLACK);
 		
 		
 		table.setBackground(Color.WHITE);
-		table.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(153, 180, 209), new Color(153, 180, 209), new Color(153, 180, 209), new Color(153, 180, 209)));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setFont(new Font("Microsoft YaHei", Font.BOLD, 14));
 		table.setBounds(20, 72, 390, 361);
@@ -113,13 +123,13 @@ public class AdminMainPage extends JFrame {
 	    table.getColumnModel().getColumn(0).setMaxWidth(0);
 	    table.getColumnModel().getColumn(0).setWidth(0);
 	    
-	    scrollPane.setBounds(20,72,390,384);
+	    scrollPane.setBounds(20,72,481,384);
         scrollPane.setViewportView(table);
 		contentPane.add(scrollPane);
 
 		
 		JButton editPharmacy = new JButton("Edit");
-		editPharmacy.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		editPharmacy.setFont(new Font("Dialog", Font.BOLD, 15));
 		editPharmacy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 		
@@ -147,14 +157,17 @@ public class AdminMainPage extends JFrame {
 			}
 		});
 		
-		editPharmacy.setBounds(302, 468, 108, 30);
+		editPharmacy.setBounds(214, 468, 108, 34);
 		contentPane.add(editPharmacy);
 		
-		JList list = new JList();
-		list.setBounds(794, 31, 120, 421);
-		contentPane.add(list);
+		JList userList = new JList(listModel);
+		userList.setFont(new Font("Arial", Font.PLAIN, 13));
+		
+		userList.setBounds(866, 25, 181, 431);
+		contentPane.add(userList);
 		
 		JButton btnDelete = new JButton("Delete");
+		btnDelete.setFont(new Font("Dialog", Font.BOLD, 15));
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -178,19 +191,60 @@ public class AdminMainPage extends JFrame {
 				}
 			}
 		});
-		btnDelete.setBounds(20, 469, 117, 29);
+		btnDelete.setBounds(20, 469, 117, 34);
 		contentPane.add(btnDelete);
 		
-		textField = new JTextField();
-		textField.setBounds(443, 464, 339, 26);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		messageTextfield = new JTextField();
+		messageTextfield.setBounds(527, 468, 327, 34);
+		contentPane.add(messageTextfield);
+		messageTextfield.setColumns(10);
+
+        textPane.setContentType( "text/html" );
+		Server server = new Server(12345, listModel, textPane,messageTextfield);
 		
+		Thread one = new Thread() {
+		    public void run() {
+		        try {
+		           server.run();
+		        }catch(Exception e) {
+		        	
+		        }
+		    }  
+		};
+
+		one.start();
+		
+
 		JButton btnSend = new JButton("Send");
-		btnSend.setBounds(794, 464, 120, 29);
+		btnSend.setFont(new Font("Dialog", Font.BOLD, 15));
+		btnSend.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				  if (userList.getSelectedValue() != null) {
+	                    String message = messageTextfield.getText().trim();
+	                    if (message.equals("")) {
+	                        return;
+	                    }
+	                    server.sendMessageToUser(
+	                            message, userList.getSelectedValue().toString(), true
+	                    );
+	                    server.clearAndAddToPane();
+
+	                }
+			}
+		});
+		btnSend.setBounds(866, 468, 181, 34);
 		contentPane.add(btnSend);
 		
+		JButton btnSupply = new JButton("Supply");
+		btnSupply.setFont(new Font("Dialog", Font.BOLD, 15));
+		btnSupply.setBounds(384, 468, 117, 34);
+		contentPane.add(btnSupply);
+		setVisible(true);
+		
 	}
+	
+	
 	
 	public void refreshTable() {
 		

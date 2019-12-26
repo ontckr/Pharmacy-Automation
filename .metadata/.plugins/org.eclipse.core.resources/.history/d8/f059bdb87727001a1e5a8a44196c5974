@@ -1,0 +1,162 @@
+package chat;
+
+import javax.swing.*;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import model.User;
+
+
+
+public class Server {
+
+    private int port;
+    private List<User> clients;
+    private ServerSocket server;
+    //private static JFrame f;
+   private  DefaultListModel<String> listModel;
+
+    public  JTextPane jtextFilDiscu;
+    private  JTextField jtextInputChat;
+    
+    public Server(int port, DefaultListModel listModel, JTextPane jtextFilDiscu, JTextField jtextInputChat) {
+		this.listModel = listModel;
+		this.jtextFilDiscu = jtextFilDiscu;
+		this.jtextInputChat = jtextInputChat;
+		this.port = port;
+	    this.clients = new ArrayList<>();
+	   
+	}
+
+ 
+
+    public void run() throws IOException {
+        server = new ServerSocket(port) {
+            protected void finalize() throws IOException {
+                this.close();
+            }
+        };
+        System.out.println("Port 12345 is now open.");
+
+        while (true) {
+            // accepts a new client
+            Socket client = server.accept();
+
+            // get nickname of newUser
+            String nickname = (new Scanner(client.getInputStream())).nextLine();
+            nickname = nickname.replace(",", ""); //  ',' use for serialisation
+            nickname = nickname.replace(" ", "_");
+            System.out.println("New Client: \"" + nickname + "\"\n\t     Host:" + client.getInetAddress().getHostAddress());
+
+            // create new User
+            User newUser = new User(client, nickname);
+
+            // add newUser message to list
+            this.clients.add(newUser);
+            listModel.removeAllElements();
+            this.clients.forEach((User u) -> {
+                listModel.addElement(u.getNickname());
+            });
+            // create a new thread for newUser incoming messages handling
+            new Thread(new UserHandler(this, newUser)).start();
+        }
+    }
+
+    // delete a user from the list
+    public void removeUser(User user) {
+        this.clients.remove(user);
+        listModel.removeAllElements();
+        this.clients.forEach((User u) -> {
+            listModel.addElement(u.getNickname());
+        });
+    }
+
+
+    // send message to a User (String)
+    public void sendMessageToUser(String msg, String user, boolean isAdmin) {
+        for (User client : this.clients) {
+            if (client.getNickname().equals(user)) {
+                if (isAdmin) {
+                    client.getOutStream().println(
+                            "Admin" + "<span>: " + msg + "</span>");
+                } else {
+                    client.getOutStream().println(
+                            user + "<span>: " + msg + "</span>");
+                }
+            }
+        }
+    }
+    
+    public  void clearAndAddToPane() {
+        try {
+            String message = jtextInputChat.getText().trim();
+            if (message.equals("")) {
+                return;
+            }
+
+            appendToPane(jtextFilDiscu, " ADMIN: " + message);
+            jtextInputChat.requestFocus();
+            jtextInputChat.setText(null);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+            System.exit(0);
+        }
+    }
+
+    public  void appendToPane(JTextPane tp, String msg) {
+        HTMLDocument doc = (HTMLDocument) tp.getDocument();
+        HTMLEditorKit editorKit = (HTMLEditorKit) tp.getEditorKit();
+        try {
+            editorKit.insertHTML(doc, doc.getLength(), msg, 0, 0, null);
+            tp.setCaretPosition(doc.getLength());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+ 
+}
+
+class UserHandler implements Runnable {
+
+    private Server server;
+    private User user;
+
+    public UserHandler(Server server, User user) {
+        this.server = server;
+        this.user = user;
+    }
+
+    public void run() {
+        String message;
+
+        // when there is a new message, broadcast to all
+        Scanner sc = new Scanner(this.user.getInputStream());
+        while (sc.hasNextLine()) {
+            message = sc.nextLine();
+
+            server.appendToPane(server.jtextFilDiscu, user.getNickname() + ": " + message);
+
+            server.sendMessageToUser(
+                    message, user.getNickname(), false
+            );
+
+
+
+        }
+        // end of Thread
+        System.out.println("Remove: ");
+
+        server.removeUser(user);
+        sc.close();
+    }
+}

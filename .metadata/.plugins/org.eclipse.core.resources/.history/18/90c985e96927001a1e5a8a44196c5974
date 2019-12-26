@@ -1,0 +1,36 @@
+package chat;
+
+import model.User;
+import java.util.Scanner;
+
+class UserHandler implements Runnable {
+
+    private Server server;
+    private User user;
+
+    public UserHandler(Server server, User user) {
+        this.server = server;
+        this.user = user;
+    }
+
+    public void run() {
+        String message;
+
+        Scanner sc = new Scanner(this.user.getInputStream());
+        while (sc.hasNextLine()) {
+            message = sc.nextLine();
+
+            server.appendToPane(server.jtextFilDiscu, user.getNickname() + ": " + message);
+
+            server.sendMessageToUser(
+                    message, user.getNickname(), false
+            );
+
+        }
+        // end of Thread
+        System.out.println("Remove: ");
+
+        server.removeUser(user);
+        sc.close();
+    }
+}

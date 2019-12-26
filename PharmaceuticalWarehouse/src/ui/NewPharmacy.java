@@ -1,9 +1,6 @@
 package ui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Font;
-
+import java.awt.*;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -19,11 +16,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
-
 import database.DatabaseController;
 import helper.UserNameConverter;
 import model.BoxSize;
-
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -51,13 +46,6 @@ public class NewPharmacy extends JFrame {
 	private JTextField textField_9;
 	private JTextField textField_0;
 	private JTextField textField;
-	
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @throws ParseException
-	 */
 	
 
 	public NewPharmacy(AdminMainPage adminMainPage) throws ParseException {
@@ -326,6 +314,7 @@ public class NewPharmacy extends JFrame {
 				
 				UserNameConverter uConverter = new UserNameConverter();
 				
+				String name = nameText.getText();
 				String username = uConverter.Converter(nameText.getText());
 				
 				DatabaseController.newPharmacy(

@@ -18,14 +18,14 @@ public class Run {
 		
 	
 		AdminMainPage adminMainPage = null;
+		
+	
 		try {
 			adminMainPage = new AdminMainPage();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		adminMainPage.setVisible(true);
-	
 		
 		try (ServerSocket listener = new ServerSocket(35000)) {
 			
