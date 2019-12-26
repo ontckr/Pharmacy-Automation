@@ -339,7 +339,7 @@ public class UserMainPage {
 		refreshButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				refreshList(username);
+				refreshList(frame, username);
 			}
 		});
 		refreshButton.setFont(new Font("Dialog", Font.BOLD, 15));

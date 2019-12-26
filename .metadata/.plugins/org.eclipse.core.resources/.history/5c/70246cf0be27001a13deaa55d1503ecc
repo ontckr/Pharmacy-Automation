@@ -105,6 +105,7 @@ public class LoginPage extends JFrame {
 					UserMainPage userMainPage = new UserMainPage(pharmacy.getId(),pharmacy.getUsername(),pharmacy.getName(),pharmacy.getAddress(),pharmacy.getEmail(),pharmacy.getDistrict(),pharmacy.getPhone());
 					
 					
+					userMainPage.setVisible(true);
 					
 					setVisible(false);
 					

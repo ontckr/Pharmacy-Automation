@@ -53,7 +53,7 @@ import model.*;
 import socket.ClientController;
 import javax.swing.JTextField;
 
-public class UserMainPage {
+public class UserMainPage extends JFrame {
 
 	private JPanel contentPane;
 
@@ -65,8 +65,6 @@ public class UserMainPage {
 	private String phone;
 	private int id;
 	private ChartPanel chartPanel;
-	public JFrame frame;
-	private UserMainPage userMainPage;
 
 	public UserMainPage(int id, String username, String name, String address, String email, String district,
 			String phone) {
@@ -77,16 +75,14 @@ public class UserMainPage {
 		this.email = email;
 		this.district = district;
 		this.phone = phone;
-		this.userMainPage = this;
 
 		ArrayList<DrugStock> drugs = ClientConnection.getPharmacyDrugs(username);
-		
-		frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setBounds(100, 100, 800, 706);
+
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 800, 706);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		frame.setContentPane(contentPane);
+		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
@@ -338,8 +334,7 @@ public class UserMainPage {
 		JButton refreshButton = new JButton("Refresh");
 		refreshButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				refreshList(username);
+			
 			}
 		});
 		refreshButton.setFont(new Font("Dialog", Font.BOLD, 15));
@@ -351,19 +346,12 @@ public class UserMainPage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				SellDrugPage sellpage=new SellDrugPage(username,userMainPage);
+				SellDrugPage sellpage=new SellDrugPage(username);
 				sellpage.setVisible(true);
 
 			}
 
 		});
 
-		frame.setVisible(true);
-	}
-	
-	public void refreshList(String username) {
-		frame.setVisible(false);
-		Pharmacy pharmacy = ClientConnection.getUserInfo(username).get(0);
-		new UserMainPage(pharmacy.getId(), pharmacy.getUsername(), pharmacy.getName(), pharmacy.getAddress(), pharmacy.getEmail(), pharmacy.getDistrict(), pharmacy.getPhone());
 	}
 }

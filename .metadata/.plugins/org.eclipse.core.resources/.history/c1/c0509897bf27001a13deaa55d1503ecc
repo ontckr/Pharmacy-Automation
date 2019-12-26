@@ -28,10 +28,8 @@ public class SellDrugPage extends JFrame {
 	private JPanel contentPane;
 	private JFrame frame;
 	private String username;
-	private UserMainPage userMainPage;
 
-	public SellDrugPage(String username, UserMainPage userMainPage) {
-		this.userMainPage = userMainPage;
+	public SellDrugPage(String username) {
 		this.username = username;
 		this.drug = drug;
 		this.id = id;
@@ -81,11 +79,8 @@ public class SellDrugPage extends JFrame {
 					System.out.println(drug);
 					System.out.println(id);
 					System.out.println(username);
-					
 					setVisible(false);
-					
-					userMainPage.refreshList(username);
-					
+
 
 				} else if (value > stock) {
 					JOptionPane.showMessageDialog(null, "Your stock is less than " + value);

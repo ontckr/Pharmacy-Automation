@@ -66,7 +66,6 @@ public class UserMainPage {
 	private int id;
 	private ChartPanel chartPanel;
 	public JFrame frame;
-	private UserMainPage userMainPage;
 
 	public UserMainPage(int id, String username, String name, String address, String email, String district,
 			String phone) {
@@ -77,7 +76,6 @@ public class UserMainPage {
 		this.email = email;
 		this.district = district;
 		this.phone = phone;
-		this.userMainPage = this;
 
 		ArrayList<DrugStock> drugs = ClientConnection.getPharmacyDrugs(username);
 		
@@ -339,7 +337,7 @@ public class UserMainPage {
 		refreshButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				refreshList(username);
+				refreshList(frame, username);
 			}
 		});
 		refreshButton.setFont(new Font("Dialog", Font.BOLD, 15));
@@ -351,17 +349,16 @@ public class UserMainPage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				SellDrugPage sellpage=new SellDrugPage(username,userMainPage);
+				SellDrugPage sellpage=new SellDrugPage(username);
 				sellpage.setVisible(true);
 
 			}
 
 		});
 
-		frame.setVisible(true);
 	}
 	
-	public void refreshList(String username) {
+	public void refreshList(JFrame frame, String username) {
 		frame.setVisible(false);
 		Pharmacy pharmacy = ClientConnection.getUserInfo(username).get(0);
 		new UserMainPage(pharmacy.getId(), pharmacy.getUsername(), pharmacy.getName(), pharmacy.getAddress(), pharmacy.getEmail(), pharmacy.getDistrict(), pharmacy.getPhone());

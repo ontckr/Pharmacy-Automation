@@ -1,45 +1,14 @@
-<<<<<<< Updated upstream
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="server"/>
+		<item key="selection" value="Spi"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="Server"/>
-			<item value="username"/>
-			<item value="neca"/>
-			<item value="atamer"/>
-			<item value="table"/>
-			<item value="pharmacy_user"/>
-			<item value="resu"/>
-			<item value="public void main"/>
+			<item value="spi"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 </section>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<section name="Workbench">
-	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="Color"/>
-		<item key="casesensitive" value="false"/>
-		<item key="wholeword" value="false"/>
-		<item key="isRegEx" value="false"/>
-		<list key="findhistory">
-			<item value="color"/>
-			<item value="Server"/>
-			<item value="username"/>
-			<item value="neca"/>
-			<item value="atamer"/>
-			<item value="table"/>
-			<item value="pharmacy_user"/>
-			<item value="resu"/>
-		</list>
-		<list key="replacehistory">
-		</list>
-	</section>
-</section>
->>>>>>> Stashed changes
