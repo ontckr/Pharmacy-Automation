@@ -96,7 +96,7 @@ public class UserMainPage {
 		panel.setLayout(null);
 
 		JLabel addressLabel = new JLabel("New label");
-		addressLabel.setBounds(343, 66, 249, 28);
+		addressLabel.setBounds(343, 66, 396, 28);
 		panel.add(addressLabel);
 		addressLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 

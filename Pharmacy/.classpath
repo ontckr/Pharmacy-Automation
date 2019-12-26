@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/eskis/Desktop/jcommon-1.0.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/eskis/Desktop/jfreechart-1.0.1.jar"/>
+	<classpathentry kind="lib" path="/Users/onatcakir/Documents/360/jcommon-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/Users/onatcakir/Documents/360/jfreechart-1.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

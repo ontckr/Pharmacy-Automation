@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JTextPane;
 import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
@@ -85,7 +86,7 @@ public class AdminMainPage extends JFrame {
 		contentPane.add(btnNewPharmacy);
 		
 		textPane = new JTextPane();
-		textPane.setFont(new Font("Arial", Font.PLAIN, 15));
+		textPane.setFont(new Font("Arial", Font.BOLD, 15));
 		textPane.setEditable(false);
 		textPane.setBackground(Color.WHITE);
 		textPane.setBounds(529, 25, 325, 431);
@@ -100,7 +101,6 @@ public class AdminMainPage extends JFrame {
 			}
 		));
 		table.setForeground(Color.BLACK);
-		
 		
 		table.setBackground(Color.WHITE);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -165,7 +165,7 @@ public class AdminMainPage extends JFrame {
 		contentPane.add(editPharmacy);
 		
 		JList userList = new JList(listModel);
-		userList.setFont(new Font("Arial", Font.PLAIN, 13));
+		userList.setFont(new Font("Arial", Font.BOLD, 14));
 		
 		userList.setBounds(866, 25, 181, 431);
 		contentPane.add(userList);
@@ -203,6 +203,7 @@ public class AdminMainPage extends JFrame {
 		messageTextfield.setColumns(10);
 
         textPane.setContentType( "text/html" );
+
 		Server server = new Server(36000, listModel, textPane,messageTextfield);
 		
 		Thread one = new Thread() {

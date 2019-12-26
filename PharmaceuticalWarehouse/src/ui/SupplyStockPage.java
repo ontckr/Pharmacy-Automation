@@ -273,7 +273,7 @@ public class SupplyStockPage extends JFrame {
 		spinner10.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		contentPane.add(spinner10);
 
-		JButton btnEdit = new JButton("Edit");
+		JButton btnEdit = new JButton("Supply");
 		btnEdit.setBounds(560, 600, 90, 30);
 		btnEdit.setForeground(Color.BLACK);
 		btnEdit.setFont(new Font("Tahoma", Font.PLAIN, 17));

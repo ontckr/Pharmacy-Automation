@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.*;
 import java.io.*;
 import javax.swing.*;
@@ -16,7 +18,6 @@ public class Client extends Thread{
     final JTextPane jtextFilDiscu = new JTextPane();
     final JTextField jtextInputChat = new JTextField();
     
-    private String oldMsg = "";
     private Thread read;
     private String serverName;
     private int PORT;
@@ -37,6 +38,19 @@ public class Client extends Thread{
         jfr.getContentPane().setLayout(null);
         jfr.setSize(540, 500);
         jfr.setResizable(false);
+        
+        jfr.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        
+        jfr.addWindowListener(new WindowAdapter() {
+        	  public void windowClosing(WindowEvent e) {
+        		   jfr.setVisible(false);
+                   
+                   read.interrupt();
+                   jtextFilDiscu.setBackground(Color.LIGHT_GRAY);
+                   appendToPane(jtextFilDiscu, "<span>Connection closed.</span>");
+                   output.close();
+        	  }
+        	});
 
         jtextFilDiscu.setBounds(25, 25, 485, 320);
         jtextFilDiscu.setFont(font);
@@ -131,7 +145,6 @@ public class Client extends Thread{
             if (message.equals("")) {
                 return;
             }
-            this.oldMsg = message;
             output.println(message);
             jtextInputChat.requestFocus();
             jtextInputChat.setText(null);
