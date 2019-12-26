@@ -18,15 +18,19 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
 import database.DatabaseController;
+import model.BoxSize;
 import model.DrugStock;
 import model.Pharmacy;
+import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
 
 public class SupplyStockPage extends JFrame {
 
 	private JPanel contentPane;
 
 	public SupplyStockPage(AdminMainPage adminMainPage, Pharmacy selectedUser) {
-		
+		ArrayList<BoxSize> boxSizes = DatabaseController.getDrugInfo();
 		setResizable(false);
 
 		String username = selectedUser.getUsername();
@@ -95,52 +99,52 @@ public class SupplyStockPage extends JFrame {
 		lblBoxSize.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 16));
 		contentPane.add(lblBoxSize);
 
-		JLabel label = new JLabel("10");
+		JLabel label = new JLabel(boxSizes.get(0).getBoxSize());
 		label.setBounds(300, 180, 48, 14);
 		label.setFont(new Font("Tahoma", Font.BOLD, 15));
 		contentPane.add(label);
 
-		JLabel label_1 = new JLabel("12");
+		JLabel label_1 = new JLabel(boxSizes.get(1).getBoxSize());
 		label_1.setBounds(300, 220, 48, 14);
 		label_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		contentPane.add(label_1);
 
-		JLabel label_2 = new JLabel("15");
+		JLabel label_2 = new JLabel(boxSizes.get(2).getBoxSize());
 		label_2.setBounds(300, 260, 48, 14);
 		label_2.setFont(new Font("Tahoma", Font.BOLD, 15));
 		contentPane.add(label_2);
 
-		JLabel label_3 = new JLabel("8");
+		JLabel label_3 = new JLabel(boxSizes.get(3).getBoxSize());
 		label_3.setBounds(300, 300, 48, 14);
 		label_3.setFont(new Font("Tahoma", Font.BOLD, 15));
 		contentPane.add(label_3);
 
-		JLabel label_4 = new JLabel("11");
+		JLabel label_4 = new JLabel(boxSizes.get(4).getBoxSize());
 		label_4.setBounds(300, 340, 48, 14);
 		label_4.setFont(new Font("Tahoma", Font.BOLD, 15));
 		contentPane.add(label_4);
 
-		JLabel label_5 = new JLabel("12");
+		JLabel label_5 = new JLabel(boxSizes.get(5).getBoxSize());
 		label_5.setBounds(300, 380, 48, 14);
 		label_5.setFont(new Font("Tahoma", Font.BOLD, 15));
 		contentPane.add(label_5);
 
-		JLabel label_6 = new JLabel("13");
+		JLabel label_6 = new JLabel(boxSizes.get(6).getBoxSize());
 		label_6.setBounds(300, 420, 48, 14);
 		label_6.setFont(new Font("Tahoma", Font.BOLD, 15));
 		contentPane.add(label_6);
 
-		JLabel label_7 = new JLabel("14");
+		JLabel label_7 = new JLabel(boxSizes.get(7).getBoxSize());
 		label_7.setBounds(300, 460, 48, 14);
 		label_7.setFont(new Font("Tahoma", Font.BOLD, 15));
 		contentPane.add(label_7);
 
-		JLabel label_8 = new JLabel("15");
+		JLabel label_8 = new JLabel(boxSizes.get(8).getBoxSize());
 		label_8.setBounds(300, 500, 48, 14);
 		label_8.setFont(new Font("Tahoma", Font.BOLD, 15));
 		contentPane.add(label_8);
 
-		JLabel label_9 = new JLabel("16");
+		JLabel label_9 = new JLabel(boxSizes.get(9).getBoxSize());
 		label_9.setBounds(300, 540, 48, 14);
 		label_9.setFont(new Font("Tahoma", Font.BOLD, 15));
 		contentPane.add(label_9);
@@ -338,8 +342,21 @@ public class SupplyStockPage extends JFrame {
 				lblDrugs.setBounds(55, 124, 74, 30);
 				panel.add(lblDrugs);
 				lblDrugs.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 16));
+				
+				JPanel panel_1 = new JPanel();
+				panel_1.setBackground(new Color(229,232,238));
+				panel_1.setBorder(new LineBorder(new Color(135, 206, 250), 3, true));
+				panel_1.setBounds(161, 21, 400, 50);
+				panel.add(panel_1);
+				panel_1.setLayout(null);
+				
+				JLabel name = new JLabel(selectedUser.getName());
+				name.setBounds(0, 0, 400, 50);
+				panel_1.add(name);
+				name.setForeground(new Color(128, 0, 128));
+				name.setFont(new Font("Microsoft YaHei", Font.BOLD | Font.ITALIC, 18));
+				name.setHorizontalAlignment(SwingConstants.CENTER);
 		
 
 	}
-
 }

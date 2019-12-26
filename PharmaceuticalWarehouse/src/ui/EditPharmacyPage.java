@@ -118,7 +118,7 @@ public class EditPharmacyPage extends JFrame {
 				new DefaultComboBoxModel<String>(new String[] { "Alia\u011Fa", "Bal\u00E7ova", "Bornova", "Konak" }));
 		districtComboBox.setSelectedItem(selectedUser.getDistrict());
 		districtComboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		districtComboBox.setBounds(115, 185, 200, 23);
+		districtComboBox.setBounds(115, 185, 200, 25);
 		contentPane.add(districtComboBox);
 		
 		JTextArea addressTextArea = new JTextArea(5, 10);

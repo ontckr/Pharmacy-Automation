@@ -51,6 +51,7 @@ public class AdminMainPage extends JFrame {
     private JTextPane textPane;
     
 	public AdminMainPage() throws IOException {
+		setResizable(false);
         listModel = new DefaultListModel<String>();
        
 		adminMainPage= this;

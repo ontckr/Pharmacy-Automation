@@ -33,6 +33,7 @@ import java.util.ArrayList;
 
 import javax.swing.UIManager;
 import javax.swing.JButton;
+import javax.swing.SpinnerNumberModel;
 
 public class NewPharmacy extends JFrame {
 
@@ -253,52 +254,62 @@ public class NewPharmacy extends JFrame {
 		contentPane.add(lblOrder);
 		
 		textField = new JSpinner();
+		textField.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		textField.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		textField.setBounds(694, 86, 48, 20);
 		contentPane.add(textField);
 		
 		textField_0 = new JSpinner();
+		textField_0.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		textField_0.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		textField_0.setBounds(694, 46, 48, 20);
 		contentPane.add(textField_0);
 	
 		
 		textField_2 = new JSpinner();
+		textField_2.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		textField_2.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		textField_2.setBounds(694, 126, 48, 20);
 		contentPane.add(textField_2);
 		
 		textField_3 = new JSpinner();
+		textField_3.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		textField_3.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		textField_3.setBounds(694, 166, 48, 20);
 		contentPane.add(textField_3);
 		
 		textField_4 = new JSpinner();
+		textField_4.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		textField_4.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		textField_4.setBounds(694, 206, 48, 20);
 		contentPane.add(textField_4);
 		
 		textField_5 = new JSpinner();
+		textField_5.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		textField_5.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		textField_5.setBounds(694, 246, 48, 20);
 		contentPane.add(textField_5);
 		
 		textField_6 = new JSpinner();
+		textField_6.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		textField_6.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		textField_6.setBounds(694, 286, 48, 20);
 		contentPane.add(textField_6);
 		
 		textField_7 = new JSpinner();
+		textField_7.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		textField_7.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		textField_7.setBounds(694, 326, 48, 20);
 		contentPane.add(textField_7);
 		
 		textField_8 = new JSpinner();
+		textField_8.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		textField_8.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		textField_8.setBounds(694, 366, 48, 20);
 		contentPane.add(textField_8);
 		
 		textField_9 = new JSpinner();
+		textField_9.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		textField_9.setFont(new Font("Microsoft YaHei", Font.BOLD, 15));
 		textField_9.setBounds(694, 406, 48, 20);
 		contentPane.add(textField_9);
