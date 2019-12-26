@@ -17,7 +17,6 @@ import java.util.Scanner;
 import model.User;
 
 
-
 public class Server {
 
     private int port;
@@ -72,8 +71,6 @@ public class Server {
         
         listModel.removeAllElements();
         
-        System.out.println(user + "leave the chat");
-
         this.clients.forEach((User u) -> {
             listModel.addElement(u.getNickname());
         });

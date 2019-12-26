@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 AbstractTextEditor.Color.Background=250,250,250
 AbstractTextEditor.Color.Background.SystemDefault=false
 AbstractTextEditor.Color.Foreground=13,13,13
@@ -28,3 +29,11 @@ searchResultIndicationColor=196,196,196
 searchResultTextStyle=BOX
 secondaryIPColor=227,227,227
 writeOccurrenceIndicationColor=240,216,168
+=======
+AbstractTextEditor.Color.Background=250,250,250
+AbstractTextEditor.Color.Background.SystemDefault=false
+AbstractTextEditor.Color.SelectionBackground.SystemDefault=false
+AbstractTextEditor.Color.SelectionForeground.SystemDefault=false
+eclipse.preferences.version=1
+overviewRuler_migration=migrated_3.1
+>>>>>>> Stashed changes

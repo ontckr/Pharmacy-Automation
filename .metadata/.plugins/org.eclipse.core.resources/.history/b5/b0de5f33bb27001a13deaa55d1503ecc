@@ -1,0 +1,15 @@
+package socket;
+
+
+import java.io.*;
+import java.net.Socket;
+
+public interface ClientController{
+	public void sendMessage();
+	public String receiveMessage();
+	public void sendData();
+	public Object receiveData();
+	
+    
+    
+}

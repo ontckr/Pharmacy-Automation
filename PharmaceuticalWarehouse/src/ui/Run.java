@@ -20,11 +20,10 @@ public class Run {
 	
 		AdminMainPage adminMainPage = null;
 		
-	
+
 		try {
 			adminMainPage = new AdminMainPage();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -43,8 +42,6 @@ public class Run {
         } catch (IOException e) {
         	e.printStackTrace();
 		}
-	
-			
 	}
 	
 	
@@ -80,11 +77,7 @@ public class Run {
 					}else if (count == 2) {
 						
 						ServerController.sendMessage("OK", socket);
-						
-//						message = ServerController.receiveMessage(socket);
-						
-						System.out.println(message);
-						
+																		
 					}
 				}  
              

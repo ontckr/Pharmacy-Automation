@@ -72,7 +72,6 @@ public class DatabaseController {
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			System.out.println("3");
 		}
 	}
 
@@ -95,7 +94,6 @@ public class DatabaseController {
 
 		} catch (Exception exception) {
 			JOptionPane.showMessageDialog(null, exception);
-			System.out.println("4");
 		}
 	}
 
@@ -124,13 +122,11 @@ public class DatabaseController {
 
 		} catch (Exception exception) {
 			JOptionPane.showMessageDialog(null, exception);
-			System.out.println("5");
 		}
 		for (DrugStock drugStock : drugs) {
 			System.out.println(drugStock.getName());
 			System.out.println(drugStock.getStock());
 		}
-
 		return drugs;
 
 	}
@@ -193,7 +189,6 @@ public class DatabaseController {
 
 		} catch (Exception exception) {
 			JOptionPane.showMessageDialog(null, exception);
-			System.out.println("6");
 		}
 		return 0;
 	}
@@ -281,27 +276,11 @@ public class DatabaseController {
 			pStatement.close();
 		} catch (Exception exception) {
 			JOptionPane.showMessageDialog(null, exception);
-			System.out.println("8");
 		}
 
 		return userList;
 	}
 
-	/*
-	 * public static void updateStock(int id,int value) {
-	 * 
-	 * try (Connection conn = DriverManager.getConnection(url);){
-	 * 
-	 * String queryString="UPDATE pharmacydrugs SET stock=stock+'"
-	 * +value+"' WHERE drug_id= '"+id+"'";
-	 * 
-	 * PreparedStatement pStatement = conn.prepareStatement(queryString);
-	 * 
-	 * pStatement.executeUpdate(); pStatement.close();
-	 * 
-	 * } catch (Exception e) { JOptionPane.showMessageDialog(null, exception); } }
-	 * 
-	 */
 	public static void updatePharmacyInfo(String username,String address,String email,String district,String phone) {
 		try (Connection conn = DriverManager.getConnection(url);) {
 

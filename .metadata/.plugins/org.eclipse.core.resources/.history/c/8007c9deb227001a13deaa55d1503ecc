@@ -1,0 +1,12 @@
+package socket;
+
+
+import java.io.*;
+import java.net.Socket;
+
+public interface ClientController{
+	public void sendMessage() {}
+	
+    
+    
+}

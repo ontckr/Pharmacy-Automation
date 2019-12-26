@@ -77,10 +77,7 @@ public class ClientConnection {
 			ClientController.sendMessage("GETDRUGS", socket);
 			ClientController.sendMessage(username, socket);
 
-
 			drugStocks = (ArrayList<DrugStock>) ClientController.receiveData(socket);
-
-			System.out.print("ilaclar geldi");
 
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

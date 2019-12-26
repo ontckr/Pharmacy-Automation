@@ -1,3 +1,9 @@
+<<<<<<< Updated upstream
 AbstractTextEditor.Color.Background=25,29,31
 eclipse.preferences.version=1
 overriddenByCSS=,AbstractTextEditor.Color.Background,
+=======
+AbstractTextEditor.Color.Background=0,0,0
+eclipse.preferences.version=1
+overriddenByCSS=,AbstractTextEditor.Color.Background,
+>>>>>>> Stashed changes

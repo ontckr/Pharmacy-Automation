@@ -27,7 +27,7 @@ public class Client extends Thread{
 
     public Client(String username) {
         this.serverName = "localhost";
-        this.PORT = 12345;
+        this.PORT = 36000;
         this.name = username;
 
         String fontfamily = "Arial, sans-serif";
@@ -83,7 +83,7 @@ public class Client extends Thread{
         try {
             
             name = username;
-            String port = "12345";
+            String port = "36000";
             serverName = "localhost";
             PORT = Integer.parseInt(port);
 
@@ -94,10 +94,8 @@ public class Client extends Thread{
             input = new BufferedReader(new InputStreamReader(server.getInputStream()));
             output = new PrintWriter(server.getOutputStream(), true);
 
-            // send nickname to server
             output.println(name);
 
-            // create new Read Thread
             read = new Read();
             read.start();
             jfr.add(jsbtn);

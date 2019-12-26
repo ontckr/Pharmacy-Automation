@@ -1,5 +1,5 @@
-package ui;
 
+package ui;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -43,36 +43,36 @@ public class LoginPage extends JFrame {
 		
 		setTitle("Log In");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 288, 265);
+		setBounds(100, 100, 329, 235);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblUsername.setBounds(35, 41, 65, 14);
+		JLabel lblUsername = new JLabel("Username :");
+		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblUsername.setBounds(35, 41, 96, 14);
 		contentPane.add(lblUsername);
 
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPassword.setBounds(35, 92, 65, 14);
+		JLabel lblPassword = new JLabel("Password :");
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblPassword.setBounds(35, 92, 96, 14);
 		contentPane.add(lblPassword);
 
 		usernameText = new JTextField();
-		usernameText.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		usernameText.setBounds(126, 38, 96, 20);
+		usernameText.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		usernameText.setBounds(143, 39, 134, 20);
 		contentPane.add(usernameText);
 		usernameText.setColumns(10);
 
 		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		passwordField.setBounds(126, 89, 96, 20);
+		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		passwordField.setBounds(143, 90, 134, 20);
 		contentPane.add(passwordField);
 
 		
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		btnLogin.addActionListener(new ActionListener() {
 			
@@ -104,6 +104,7 @@ public class LoginPage extends JFrame {
 
 					UserMainPage userMainPage = new UserMainPage(pharmacy.getId(),pharmacy.getUsername(),pharmacy.getName(),pharmacy.getAddress(),pharmacy.getEmail(),pharmacy.getDistrict(),pharmacy.getPhone());
 					
+					
 					userMainPage.setVisible(true);
 					
 					setVisible(false);
@@ -116,7 +117,7 @@ public class LoginPage extends JFrame {
 				}
 			}
 		});
-		btnLogin.setBounds(89, 170, 89, 23);
+		btnLogin.setBounds(115, 155, 100, 33);
 		contentPane.add(btnLogin);
 	}
 }
