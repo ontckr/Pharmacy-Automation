@@ -302,6 +302,21 @@ public class DatabaseController {
 	 * } catch (Exception e) { JOptionPane.showMessageDialog(null, exception); } }
 	 * 
 	 */
+	public static void updatePharmacyInfo(String username,String address,String email,String district,String phone) {
+		try (Connection conn = DriverManager.getConnection(url);) {
+
+			String queryString = "UPDATE pharmacy SET address='"+address+"',email='"+email+"',district='"+district+"',phone='"+phone+"'WHERE username='"+username+"'";
+
+			PreparedStatement pStatement = conn.prepareStatement(queryString);
+
+			pStatement.executeUpdate();
+			pStatement.close();
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, exception);
+		}
+	}
+	
 	public static void updateStock(int id, int value, String username) {
 
 		try (Connection conn = DriverManager.getConnection(url);) {

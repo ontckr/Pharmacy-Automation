@@ -150,7 +150,12 @@ public class AdminMainPage extends JFrame {
 					System.out.println(selectedIndex);
 					System.out.println("Selected user: "+ selectedUser.getName());
 				
-					editPharmacyPage = new EditPharmacyPage(adminMainPage,selectedUser);
+					try {
+						editPharmacyPage = new EditPharmacyPage(adminMainPage,selectedUser);
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					editPharmacyPage.setVisible(true);
 				}
 				
